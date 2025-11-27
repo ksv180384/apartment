@@ -1,0 +1,59 @@
+<?php
+
+namespace App\Http\Requests\Admin\OwnershipType;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+class UpdateOwnershipTypeRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        $ownershipTypesId = $this->route('id');
+
+        return [
+            'name' => [
+                'required',
+                'min:2',
+                Rule::unique('ownership_types', 'name')->ignore($ownershipTypesId)
+            ],
+            'slug' => [
+                'nullable',
+                'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
+                Rule::unique('ownership_types', 'slug')->ignore($ownershipTypesId)
+            ],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Поле "Название" обязательно для заполнения.',
+            'name.unique' => 'Категория с таким названием уже существует.',
+            'name.min' => 'Название должно содержать не менее 2-х символов.',
+            'slug.regex' => 'Поле "Slug" должно содержать только латинские буквы, цифры и дефисы.',
+            'slug.unique' => 'Категория с таким slug уже существует.',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'name' => 'Название',
+            'slug' => 'ЧПУ-ссылка',
+        ];
+    }
+}
