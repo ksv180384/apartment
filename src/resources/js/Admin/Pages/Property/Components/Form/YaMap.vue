@@ -38,6 +38,8 @@ import {
   YandexMapControls,
 } from 'vue-yandex-maps';
 
+const emits = defineEmits(['selectAddress']);
+
 //Можно использовать для различных преобразований
 const map = shallowRef(null);
 const selectedInput = ref([36.597014, 55.117082]);
@@ -61,7 +63,7 @@ const onDragEnd = () => {
 };
 
 const search = (e) => {
-  console.log(e.params.text)
+  emits('selectAddress', e.params.text);
   zoom.value = 17;
 }
 

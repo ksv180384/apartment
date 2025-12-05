@@ -244,6 +244,15 @@ const submit = async () => {
   emits('submit', form);
 }
 
+const onSelectAddress = (address) => {
+  const [ region, city, street, houseNumber ] = address.split(', ');
+
+  form.region = region;
+  form.city = city;
+  form.street = street;
+  form.house_number = houseNumber;
+}
+
 watch(
   () => form.property_type_id,
   () => {
@@ -414,7 +423,9 @@ onMounted(() => {
     </div>
 
     <div>
-      <ya-map/>
+      <ya-map
+        @selectAddress="onSelectAddress"
+      />
     </div>
 
     <div class="flex flex-row py-3">
