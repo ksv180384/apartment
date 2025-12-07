@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Property\CreatePropertyRequest;
 use App\Http\Resources\Admin\BuildingClass\BuildingClassListResource;
 use App\Http\Resources\Admin\BuildingType\BuildingTypeListResource;
 use App\Http\Resources\Admin\Category\CategoryListResource;
@@ -32,6 +33,7 @@ use App\Services\PropertyService;
 use App\Services\PropertyTypeService;
 use App\Services\PurposeService;
 use App\Services\RepairTypeService;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class PropertyController extends Controller
@@ -91,14 +93,14 @@ class PropertyController extends Controller
             'ownershipTypes' => OwnershipTypeListResource::collection($ownershipTypes),
         ]);
     }
-//
-//    public function store(CreateRepairTypeRequest $request, RepairTypeService $repairTypeService)
-//    {
-//        $repairTypeService->create($request->validated());
-//
-//        return Redirect::route('admin.repair_types.index');
-//    }
-//
+
+    public function store(CreatePropertyRequest $request, PropertyService $propertyService)
+    {
+        $propertyService->create($request->validated());
+
+        return Redirect::route('admin.properties.index');
+    }
+
     public function edit(int $id)
     {
         $property = Property::query()->findOrFail($id);

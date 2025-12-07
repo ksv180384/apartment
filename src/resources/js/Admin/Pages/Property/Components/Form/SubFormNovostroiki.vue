@@ -100,12 +100,12 @@ defineProps({
 
   <div class="flex md:flex-row flex-col items-end gap-4">
     <div class="flex-1">
-      <el-form-item prop="completion_date">
+      <el-form-item prop="has_installment">
         <el-switch v-model="model.has_installment" active-text="Рассрочка от застройщика"/>
       </el-form-item>
     </div>
     <div class="flex-1">
-      <el-form-item prop="completion_date">
+      <el-form-item prop="has_balcony">
         <el-switch v-model="model.has_balcony" active-text="балкон"/>
       </el-form-item>
     </div>
@@ -113,12 +113,12 @@ defineProps({
 
   <div class="flex md:flex-row flex-col items-end gap-4">
     <div class="flex-1">
-      <el-form-item prop="completion_date">
+      <el-form-item prop="has_mortgage">
         <el-switch v-model="model.has_mortgage" active-text="Ипотека от застройщика"/>
       </el-form-item>
     </div>
     <div class="flex-1">
-      <el-form-item prop="completion_date">
+      <el-form-item prop="has_loggia">
         <el-switch v-model="model.has_loggia" active-text="лоджия"/>
       </el-form-item>
     </div>

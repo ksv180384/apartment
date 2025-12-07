@@ -38,7 +38,7 @@ import {
   YandexMapControls,
 } from 'vue-yandex-maps';
 
-const emits = defineEmits(['selectAddress']);
+const emits = defineEmits(['selectAddress', 'selectPosition']);
 
 //Можно использовать для различных преобразований
 const map = shallowRef(null);
@@ -57,13 +57,21 @@ const settings = reactive({
 });
 
 // Обработчик клика по карте
-const onDragEnd = () => {
-  mapCenter.value = selectedInput.value;
-  console.log(selectedInput.value)
+const onDragEnd = async (e) => {
+  selectedInput.value = e;
+
+  // console.log(ymaps3.YMap)
+  // console.log(map.value.zoom)
+
+  emits('selectPosition', e);
+
 };
 
 const search = (e) => {
+  console.log(e)
+  // mapCenter.value = selectedInput.value;
   emits('selectAddress', e.params.text);
+  emits('selectPosition', selectedInput.value);
   zoom.value = 17;
 }
 
@@ -76,6 +84,7 @@ watch(
   () => {
     // Обнинск
     mapCenter.value = selectedInput.value;
+    zoom.value = map.value.zoom;
     console.log(selectedInput.value)
   },
   { deep: true }

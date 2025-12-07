@@ -4,6 +4,7 @@ import { useForm } from '@inertiajs/vue3';
 
 import YaMap from '@/Admin/Pages/Property/Components/Form/YaMap.vue';
 import SubFormNovostroiki from '@/Admin/Pages/Property/Components/Form/SubFormNovostroiki.vue';
+import SubFormKvartiry from '@/Admin/Pages/Property/Components/Form/SubFormKvartiry.vue';
 import SubFormDoma from '@/Admin/Pages/Property/Components/Form/SubFormDoma.vue';
 import SubFormUcastki from '@/Admin/Pages/Property/Components/Form/SubFormUcastki.vue';
 import SubFormKommerceskaiaNedvizimost from '@/Admin/Pages/Property/Components/Form/SubFormKommerceskaiaNedvizimost.vue';
@@ -43,6 +44,8 @@ const additionalFieldsConfig = {
     finishing_type_id: props.property?.finishing_type_id || '',
     has_installment: props.property?.finishing_type_id || false,
     has_mortgage: props.property?.finishing_type_id || false,
+    has_balcony: props.property?.has_balcony  || false,
+    has_loggia: props.property?.has_loggia  || false,
   },
   kvartiry: {
     completion_date: props.property?.title || '',
@@ -136,8 +139,11 @@ const additionalFieldsConfig = {
 };
 
 const subFormComponent = computed(() => {
-  if (['kvartiry', 'novostroiki', 'komnaty'].includes(propertyTypeActive.value?.slug)) {
+  if (['novostroiki'].includes(propertyTypeActive.value?.slug)) {
     return SubFormNovostroiki;
+  }
+  if (['kvartiry', 'komnaty'].includes(propertyTypeActive.value?.slug)) {
+    return SubFormKvartiry;
   }
   else if(propertyTypeActive.value?.slug === 'doma'){
     return SubFormDoma;
@@ -159,6 +165,7 @@ const form = useForm({
   price: props.property?.price || '',
   category_id : props.property?.category_id || '',
   property_type_id : props.property?.property_type_id || '',
+  property_type_slug : null,
   is_published: props.property?.is_published  || '',
   area_total: props.property?.area_total  || '',
   area_living: props.property?.area_living  || '',
@@ -253,10 +260,18 @@ const onSelectAddress = (address) => {
   form.house_number = houseNumber;
 }
 
+const onSelectPosition = (position) => {
+  const [ latitude, longitude ] = position;
+
+  form.latitude = latitude;
+  form.longitude = longitude;
+}
+
 watch(
   () => form.property_type_id,
   () => {
     propertyTypeActive.value = props.propertyTypes.find(item => item.id === form.property_type_id);
+    form.property_type_slug = propertyTypeActive.value;
     form.additional = additionalFieldsConfig?.[propertyTypeActive.value?.slug] || null;
   }
 );
@@ -422,9 +437,46 @@ onMounted(() => {
       />
     </div>
 
+    <el-divider content-position="left">Адрес</el-divider>
+
+    <div class="flex flex-col">
+      <div class="flex gap-3">
+        <el-form-item label="Область" label-position="top" prop="region" class="flex-1" :error="errors?.region || null">
+          <el-input v-model="form.region" placeholder="Область"/>
+        </el-form-item>
+
+        <el-form-item label="Город" label-position="top" prop="city" class="flex-1" :error="errors?.city || null">
+          <el-input v-model="form.city" placeholder="Город"/>
+        </el-form-item>
+
+        <el-form-item label="Улица" label-position="top" prop="street" class="flex-1" :error="errors?.street || null">
+          <el-input v-model="form.street" placeholder="Улица"/>
+        </el-form-item>
+
+        <el-form-item label="Номер дома" label-position="top" prop="house_number" class="flex-1" :error="errors?.house_number || null">
+          <el-input v-model="form.house_number" placeholder="Номер дома"/>
+        </el-form-item>
+
+        <el-form-item label="Номер квартиры" label-position="top" prop="apartment_number" class="flex-1" :error="errors?.apartment_number || null">
+          <el-input v-model="form.apartment_number" placeholder="Номер квартиры"/>
+        </el-form-item>
+      </div>
+
+      <div class="flex gap-3">
+        <el-form-item label="Широта" label-position="top" prop="latitude" class="flex-1" :error="errors?.latitude || null">
+          <el-input v-model="form.latitude" placeholder="Широта"/>
+        </el-form-item>
+
+        <el-form-item label="Долгота" label-position="top" prop="longitude" class="flex-1" :error="errors?.longitude || null">
+          <el-input v-model="form.longitude" placeholder="Долгота"/>
+        </el-form-item>
+      </div>
+    </div>
+
     <div>
       <ya-map
         @selectAddress="onSelectAddress"
+        @selectPosition="onSelectPosition"
       />
     </div>
 
