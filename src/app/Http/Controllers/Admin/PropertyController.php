@@ -101,12 +101,50 @@ class PropertyController extends Controller
         return Redirect::route('admin.properties.index');
     }
 
-    public function edit(int $id)
+    public function edit(
+        int $id,
+        CategoryService $categoryService,
+        PropertyTypeService $propertyTypeService,
+        ConditionService $conditionService,
+        RepairTypeService $repairTypeService,
+        BuildingClassService $buildingClassService,
+        BuildingTypeService $buildingTypeService,
+        FinishingTypeService $finishingTypeService,
+        CommercialTypeService $commercialTypeService,
+        PurposeService $purposeService,
+        LayoutTypeService $layoutTypeService,
+        GarageTypeService $garageTypeService,
+        OwnershipTypeService $ownershipTypeService
+    )
     {
         $property = Property::query()->findOrFail($id);
+        $categories = $categoryService->categoriesList();
+        $propertyTypes = $propertyTypeService->PropertyTypesList();
+        $conditions = $conditionService->conditionsList();
+        $repairTypes = $repairTypeService->repairTypesList();
+        $buildingClasses = $buildingClassService->buildingClassesList();
+        $buildingTypes = $buildingTypeService->buildingTypesList();
+        $finishingTypes = $finishingTypeService->finishingTypesList();
+        $commercialTypes = $commercialTypeService->commercialTypesList();
+        $purposes = $purposeService->purposesList();
+        $layoutTypes = $layoutTypeService->layoutTypesList();
+        $garageTypes = $garageTypeService->garageTypesList();
+        $ownershipTypes = $ownershipTypeService->ownershipTypesList();
 
         return Inertia::render('Property/EditProperty', [
             'property' => $property,
+            'categories' => CategoryListResource::collection($categories),
+            'propertyTypes' => PropertyTypeListResource::collection($propertyTypes),
+            'conditions' => ConditionListResource::collection($conditions),
+            'repairTypes' => RepairTypeListResource::collection($repairTypes),
+            'buildingClasses' => BuildingClassListResource::collection($buildingClasses),
+            'buildingTypes' => BuildingTypeListResource::collection($buildingTypes),
+            'finishingTypes' => FinishingTypeListResource::collection($finishingTypes),
+            'commercialTypes' => CommercialTypeListResource::collection($commercialTypes),
+            'purposes' => PurposeListResource::collection($purposes),
+            'layoutTypes' => LayoutTypeListResource::collection($layoutTypes),
+            'garageTypes' => GarageTypeListResource::collection($garageTypes),
+            'ownershipTypes' => OwnershipTypeListResource::collection($ownershipTypes),
         ]);
     }
 //

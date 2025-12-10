@@ -34,7 +34,7 @@ const refInputName = ref();
 const propertyTypeActive = ref(null);
 const additionalFieldsConfig = {
   novostroiki: {
-    completion_date: props.property?.title || '',
+    completion_date: props.property?.completion_date || '',
     building_name: props.property?.building_name || '',
     developer: props.property?.developer || '',
     building_class_id: props.property?.building_class_id || '',
@@ -42,13 +42,13 @@ const additionalFieldsConfig = {
     building_floors: props.property?.building_floors || '',
     apartments_total: props.property?.apartments_total || '',
     finishing_type_id: props.property?.finishing_type_id || '',
-    has_installment: props.property?.finishing_type_id || false,
-    has_mortgage: props.property?.finishing_type_id || false,
+    has_installment: props.property?.has_installment || false,
+    has_mortgage: props.property?.has_mortgage || false,
     has_balcony: props.property?.has_balcony  || false,
     has_loggia: props.property?.has_loggia  || false,
   },
   kvartiry: {
-    completion_date: props.property?.title || '',
+    completion_date: props.property?.completion_date || '',
     building_name: props.property?.building_name || '',
     developer: props.property?.developer || '',
     building_class_id: props.property?.building_class_id || '',
@@ -56,13 +56,13 @@ const additionalFieldsConfig = {
     building_floors: props.property?.building_floors || '',
     apartments_total: props.property?.apartments_total || '',
     finishing_type_id: props.property?.finishing_type_id || '',
-    has_installment: props.property?.finishing_type_id || false,
-    has_mortgage: props.property?.finishing_type_id || false,
+    has_installment: props.property?.has_installment || false,
+    has_mortgage: props.property?.has_mortgage || false,
     has_balcony: props.property?.has_balcony  || false,
     has_loggia: props.property?.has_loggia  || false,
   },
   komnaty: {
-    completion_date: props.property?.title || '',
+    completion_date: props.property?.completion_date || '',
     building_name: props.property?.building_name || '',
     developer: props.property?.developer || '',
     building_class_id: props.property?.building_class_id || '',
@@ -70,8 +70,8 @@ const additionalFieldsConfig = {
     building_floors: props.property?.building_floors || '',
     apartments_total: props.property?.apartments_total || '',
     finishing_type_id: props.property?.finishing_type_id || '',
-    has_installment: props.property?.finishing_type_id || false,
-    has_mortgage: props.property?.finishing_type_id || false,
+    has_installment: props.property?.has_installment || false,
+    has_mortgage: props.property?.has_mortgage || false,
     has_balcony: props.property?.has_balcony  || false,
     has_loggia: props.property?.has_loggia  || false,
   },
@@ -188,7 +188,7 @@ const form = useForm({
 });
 const rules = reactive({});
 
-const subFormProps = computed(() => {
+const getSubFormProps = () => {
   if (!propertyTypeActive.value) return {};
 
   const baseProps = {
@@ -238,7 +238,7 @@ const subFormProps = computed(() => {
     default:
       return baseProps;
   }
-});
+};
 
 const submit = async () => {
 
@@ -269,16 +269,38 @@ const onSelectPosition = (position) => {
 
 watch(
   () => form.property_type_id,
-  () => {
-    propertyTypeActive.value = props.propertyTypes.find(item => item.id === form.property_type_id);
-    form.property_type_slug = propertyTypeActive.value;
-    form.additional = additionalFieldsConfig?.[propertyTypeActive.value?.slug] || null;
-  }
+  (newTypeId) => {
+    propertyTypeActive.value = props.propertyTypes.find(item => item.id === newTypeId);
+
+    if (propertyTypeActive.value?.slug) {
+      form.property_type_slug = propertyTypeActive.value.slug;
+
+      // Сохраняем предыдущие значения, если они есть
+      const currentAdditional = form.additional || {};
+      const defaultAdditional = additionalFieldsConfig?.[propertyTypeActive.value.slug] || {};
+
+      // Объединяем текущие значения с дефолтными для нового типа
+      form.additional = { ...defaultAdditional, ...currentAdditional };
+    }
+  },
+  { immediate: true } // Добавьте immediate: true для инициализации при загрузке
 );
 
 onMounted(() => {
   nextTick(() => {
     refInputName.value.focus();
+
+    // Инициализируем активный тип недвижимости и дополнительные поля
+    if (props.property?.property_type_id) {
+      propertyTypeActive.value = props.propertyTypes.find(
+        item => item.id === props.property.property_type_id
+      );
+
+      if (propertyTypeActive.value?.slug) {
+        form.property_type_slug = propertyTypeActive.value.slug;
+        form.additional = additionalFieldsConfig[propertyTypeActive.value.slug];
+      }
+    }
   });
 });
 </script>

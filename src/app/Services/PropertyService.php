@@ -22,6 +22,8 @@ class PropertyService
 
     public function create(array $propertyData): Property
     {
+
+        dd($propertyData);
         $property = Property::query()->create($propertyData);
 
         return $property;
