@@ -29,9 +29,11 @@ const props = defineProps({
 const emits = defineEmits(['submit']);
 
 const refForm = ref();
+const refSubForm = ref();
 const refInputName = ref();
 
 const propertyTypeActive = ref(null);
+/*
 const additionalFieldsConfig = {
   novostroiki: {
     completion_date: props.property?.completion_date || '',
@@ -137,7 +139,7 @@ const additionalFieldsConfig = {
   }
 
 };
-
+*/
 const subFormComponent = computed(() => {
   if (['novostroiki'].includes(propertyTypeActive.value?.slug)) {
     return SubFormNovostroiki;
@@ -159,7 +161,34 @@ const subFormComponent = computed(() => {
   }
 });
 
-const form = useForm({
+const inertiaForm = useForm({
+  title: null,
+  description: null,
+  price: null,
+  category_id : null,
+  property_type_id : null,
+  property_type_slug : null,
+  is_published: null,
+  area_total: null,
+  area_living: null,
+  floor: null,
+  floors_total: null,
+  rooms_total: null,
+  bathrooms_total: null,
+  year_built: null,
+  condition_id: null,
+  repair_type_id: null,
+  region: null,
+  city: null,
+  district: null,
+  street: null,
+  house_number: null,
+  apartment_number: null,
+  latitude: null,
+  longitude: null,
+  sub_data: null,
+});
+const form = reactive({
   title: props.property?.title || '',
   description: props.property?.description || '',
   price: props.property?.price || '',
@@ -184,72 +213,61 @@ const form = useForm({
   apartment_number: props.property?.apartment_number  || '',
   latitude: props.property?.latitude  || '',
   longitude: props.property?.longitude  || '',
-  additional: null,
 });
 const rules = reactive({});
 
 const getSubFormProps = () => {
   if (!propertyTypeActive.value) return {};
 
-  const baseProps = {
-    modelValue: form.additional,
-    'onUpdate:modelValue': (value) => form.additional = value
-  };
+  // const baseProps = {
+  //   modelValue: form.additional,
+  //   'onUpdate:modelValue': (value) => form.additional = value
+  // };
 
   switch (propertyTypeActive.value.slug) {
     case 'novostroiki':
       return {
-        ...baseProps,
+        // ...baseProps,
         buildingClasses: props.buildingClasses,
         buildingTypes: props.buildingTypes,
         finishingTypes: props.finishingTypes,
       };
     case 'kvartiry':
       return {
-        ...baseProps,
+        // ...baseProps,
         buildingClasses: props.buildingClasses,
         buildingTypes: props.buildingTypes,
         finishingTypes: props.finishingTypes,
       };
     case 'komnaty':
       return {
-        ...baseProps,
+        // ...baseProps,
         buildingClasses: props.buildingClasses,
         buildingTypes: props.buildingTypes,
         finishingTypes: props.finishingTypes,
       };
     case 'doma':
       return {
-        ...baseProps,
+        // ...baseProps,
       };
     case 'kommerceskaia-nedvizimost':
       return {
-        ...baseProps,
+        // ...baseProps,
         commercialTypes: props.commercialTypes,
         purposes: props.purposes,
         layoutTypes: props.layoutTypes,
       };
     case 'garazi':
       return {
-        ...baseProps,
+        // ...baseProps,
         garageTypes: props.garageTypes,
         ownershipTypes: props.ownershipTypes,
       };
     default:
-      return baseProps;
+      // return baseProps;
+      return {};
   }
 };
-
-const submit = async () => {
-
-  const isFormValid = await refForm.value.validate((valid) => valid);
-
-  if(!isFormValid){
-    return true;
-  }
-
-  emits('submit', form);
-}
 
 const onSelectAddress = (address) => {
   const [ region, city, street, houseNumber ] = address.split(', ');
@@ -266,6 +284,47 @@ const onSelectPosition = (position) => {
   form.latitude = latitude;
   form.longitude = longitude;
 }
+// Получение данных из субформы
+const updateSubForm = (data) => {
+  inertiaForm.sub_data = data;
+}
+
+const submit = async () => {
+
+  const isFormValid = await refForm.value.validate((valid) => valid);
+  const isSubFormValid = await refSubForm.value.checkForm();
+
+  if(!isFormValid || !isSubFormValid){
+    return true;
+  }
+
+  inertiaForm.title = form.title;
+  inertiaForm.description = form.description;
+  inertiaForm.price = form.price;
+  inertiaForm.category_id = form.category_id;
+  inertiaForm.property_type_id = form.property_type_id;
+  inertiaForm.property_type_slug = form.property_type_slug;
+  inertiaForm.is_published = form.is_published;
+  inertiaForm.area_total = form.area_total;
+  inertiaForm.area_living = form.area_living;
+  inertiaForm.floor = form.floor;
+  inertiaForm.floors_total = form.floors_total;
+  inertiaForm.rooms_total = form.rooms_total;
+  inertiaForm.bathrooms_total = form.bathrooms_total;
+  inertiaForm.year_built = form.year_built;
+  inertiaForm.condition_id = form.condition_id;
+  inertiaForm.repair_type_id = form.repair_type_id;
+  inertiaForm.region = form.region;
+  inertiaForm.city = form.city;
+  inertiaForm.district = form.district;
+  inertiaForm.street = form.street;
+  inertiaForm.house_number = form.house_number;
+  inertiaForm.apartment_number = form.apartment_number;
+  inertiaForm.latitude = form.latitude;
+  inertiaForm.longitude = form.longitude;
+
+  emits('submit', inertiaForm);
+}
 
 watch(
   () => form.property_type_id,
@@ -274,33 +333,13 @@ watch(
 
     if (propertyTypeActive.value?.slug) {
       form.property_type_slug = propertyTypeActive.value.slug;
-
-      // Сохраняем предыдущие значения, если они есть
-      const currentAdditional = form.additional || {};
-      const defaultAdditional = additionalFieldsConfig?.[propertyTypeActive.value.slug] || {};
-
-      // Объединяем текущие значения с дефолтными для нового типа
-      form.additional = { ...defaultAdditional, ...currentAdditional };
     }
   },
-  { immediate: true } // Добавьте immediate: true для инициализации при загрузке
 );
 
 onMounted(() => {
   nextTick(() => {
     refInputName.value.focus();
-
-    // Инициализируем активный тип недвижимости и дополнительные поля
-    if (props.property?.property_type_id) {
-      propertyTypeActive.value = props.propertyTypes.find(
-        item => item.id === props.property.property_type_id
-      );
-
-      if (propertyTypeActive.value?.slug) {
-        form.property_type_slug = propertyTypeActive.value.slug;
-        form.additional = additionalFieldsConfig[propertyTypeActive.value.slug];
-      }
-    }
   });
 });
 </script>
@@ -315,8 +354,8 @@ onMounted(() => {
   <div class="flex flex-col">
     <div class="flex md:flex-row flex-col gap-4">
       <div class="flex-1">
-        <el-form-item label="Название" label-position="top" prop="name" required :error="errors?.title || null">
-          <el-input ref="refInputName" v-model="form.name" placeholder="Название"/>
+        <el-form-item label="Название" label-position="top" prop="title" required :error="errors?.title || null">
+          <el-input ref="refInputName" v-model="form.title" placeholder="Название"/>
         </el-form-item>
       </div>
       <div class="flex-1">
@@ -454,8 +493,11 @@ onMounted(() => {
 <!--      />-->
       <component
         :is="subFormComponent"
-        v-bind="subFormProps"
+        ref="refSubForm"
         v-if="subFormComponent"
+        v-bind="getSubFormProps()"
+        :form-data="form"
+        @update="updateSubForm"
       />
     </div>
 
