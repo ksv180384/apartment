@@ -15,6 +15,12 @@ const novostroikiForm = reactive({
   building_name: '',
   developer: '',
   building_floors: '',
+  floor: '',
+  area_living: '',
+  area_kitchen: '',
+  rooms_total: '',
+  bathrooms_total: '',
+  ceiling_height: '',
   apartments_total: '',
   building_class_id: '',
   building_type_id: '',
@@ -85,9 +91,7 @@ onMounted(() => {
             />
           </el-form-item>
         </div>
-      </div>
 
-      <div class="flex md:flex-row flex-col gap-4">
         <div class="flex-1">
           <el-form-item label="Этажность дома" label-position="top" prop="building_floors" :error="errors?.building_floors || null">
             <el-input
@@ -97,6 +101,19 @@ onMounted(() => {
             />
           </el-form-item>
         </div>
+      </div>
+
+      <div class="flex md:flex-row flex-col gap-4">
+        <div class="flex-1">
+          <el-form-item label="Этаж" label-position="top" prop="floor" :error="errors?.floor || null">
+            <el-input
+              v-model="novostroikiForm.floor"
+              placeholder="Этаж"
+              @input="updateParent"
+            />
+          </el-form-item>
+        </div>
+
         <div class="flex-1">
           <el-form-item label="Количество квартир в доме" label-position="top" prop="apartments_total" :error="errors?.apartments_total || null">
             <el-input
@@ -106,7 +123,48 @@ onMounted(() => {
             />
           </el-form-item>
         </div>
+
+        <div class="flex-1">
+          <el-form-item label="Жилая площадь в м²" label-position="top" prop="area_living" :error="errors?.area_living || null">
+            <el-input
+              v-model="novostroikiForm.area_living"
+              placeholder="Жилая площадь в м²"
+              @input="updateParent"
+            />
+          </el-form-item>
+        </div>
       </div>
+
+      <div class="flex md:flex-row flex-col gap-4">
+        <div class="flex-1">
+          <el-form-item label="Площадь кухни в м²" label-position="top" prop="area_kitchen" :error="errors?.area_kitchen || null">
+            <el-input
+              v-model="novostroikiForm.area_kitchen"
+              placeholder="Площадь площадь в м²"
+              @input="updateParent"
+            />
+          </el-form-item>
+        </div>
+        <div class="flex-1">
+          <el-form-item label="Количество комнат" label-position="top" prop="rooms_total" :error="errors?.rooms_total || null">
+            <el-input
+              v-model="novostroikiForm.rooms_total"
+              placeholder="Количество комнат"
+              @input="updateParent"
+            />
+          </el-form-item>
+        </div>
+        <div class="flex-1">
+          <el-form-item label="Количество санузлов" label-position="top" prop="bathrooms_total" :error="errors?.bathrooms_total || null">
+            <el-input
+              v-model="novostroikiForm.bathrooms_total"
+              placeholder="Количество санузлов"
+              @input="updateParent"
+            />
+          </el-form-item>
+        </div>
+      </div>
+
       <div class="flex md:flex-row flex-col gap-4">
         <div class="flex-1">
           <el-form-item label="Класс жилья" label-position="top" prop="building_class_id" required :error="errors?.building_class_id || null">
@@ -157,7 +215,18 @@ onMounted(() => {
           </el-form-item>
         </div>
       </div>
-      <div class="flex md:flex-row flex-col items-end gap-4">
+      <div class="flex md:flex-row flex-col gap-4">
+
+        <div class="flex-1">
+          <el-form-item label="Высота потолков" label-position="top" prop="ceiling_height" :error="errors?.ceiling_height || null">
+            <el-input
+              v-model="novostroikiForm.ceiling_height"
+              placeholder="Высота потолков"
+              @change="updateParent"
+            />
+          </el-form-item>
+        </div>
+
         <div class="flex-1">
           <el-form-item label="Дата сдачи дома" label-position="top" prop="completion_date" :error="errors?.completion_date || null">
             <el-date-picker
@@ -173,15 +242,6 @@ onMounted(() => {
 
       <div class="flex md:flex-row flex-col items-end gap-4">
         <div class="flex-1">
-          <el-form-item prop="has_installment">
-            <el-switch
-              v-model="novostroikiForm.has_installment"
-              active-text="Рассрочка от застройщика"
-              @change="updateParent"
-            />
-          </el-form-item>
-        </div>
-        <div class="flex-1">
           <el-form-item prop="has_balcony">
             <el-switch
               v-model="novostroikiForm.has_balcony"
@@ -190,23 +250,32 @@ onMounted(() => {
             />
           </el-form-item>
         </div>
-      </div>
-
-      <div class="flex md:flex-row flex-col items-end gap-4">
         <div class="flex-1">
-          <el-form-item prop="has_mortgage">
+          <el-form-item prop="has_installment">
             <el-switch
-              v-model="novostroikiForm.has_mortgage"
-              active-text="Ипотека от застройщика"
+              v-model="novostroikiForm.has_installment"
+              active-text="Рассрочка от застройщика"
               @change="updateParent"
             />
           </el-form-item>
         </div>
+      </div>
+
+      <div class="flex md:flex-row flex-col items-end gap-4">
         <div class="flex-1">
           <el-form-item prop="has_loggia">
             <el-switch
               v-model="novostroikiForm.has_loggia"
               active-text="лоджия"
+              @change="updateParent"
+            />
+          </el-form-item>
+        </div>
+        <div class="flex-1">
+          <el-form-item prop="has_mortgage">
+            <el-switch
+              v-model="novostroikiForm.has_mortgage"
+              active-text="Ипотека от застройщика"
               @change="updateParent"
             />
           </el-form-item>

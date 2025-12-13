@@ -17,14 +17,14 @@ return new class extends Migration
 
             // ОБЩИЕ ХАРАКТЕРИСТИКИ (для всех типов недвижимости)
             $table->decimal('area_total', 8, 2)->nullable(); // Общая площадь в м²
-            $table->decimal('area_living', 8, 2)->nullable(); // Жилая площадь в м²
-            $table->integer('floor')->nullable(); // Этаж
-            $table->integer('floors_total')->nullable(); // Всего этажей в здании
-            $table->integer('rooms_total')->nullable(); // Количество комнат
-            $table->integer('bathrooms_total')->nullable(); // Количество санузлов
+//            $table->decimal('area_living', 8, 2)->nullable(); // Жилая площадь в м²
+//            $table->integer('floor')->nullable(); // Этаж
+//            $table->integer('floors_total')->nullable(); // Всего этажей в здании
+//            $table->integer('rooms_total')->nullable(); // Количество комнат
+//            $table->integer('bathrooms_total')->nullable(); // Количество санузлов
             $table->integer('year_built')->nullable(); // Год постройки
             $table->unsignedBigInteger('condition_id')->nullable()->default(null); // Состояние: 'черновая', 'чистовая', 'требует ремонта'
-            $table->unsignedBigInteger('repair_type_id')->nullable()->default(null); // Типа ремонта: Косметический, Капитальный, Евроремонт, Дизайнерский
+//            $table->unsignedBigInteger('repair_type_id')->nullable()->default(null); // Типа ремонта: Косметический, Капитальный, Евроремонт, Дизайнерский
             $table->decimal('ceiling_height', 8, 2)->nullable(); // Высота потолков
 //            $table->boolean('has_balcony')->nullable(); // есть ли балкон
 //            $table->boolean('has_loggia')->nullable(); // есть ли лоджия
@@ -36,10 +36,10 @@ return new class extends Migration
                 ->on('conditions')
                 ->onDelete('set null'); // или 'cascade', в зависимости от логики
 
-            $table->foreign('repair_type_id')
-                ->references('id')
-                ->on('repair_types')
-                ->onDelete('set null'); // или 'cascade', в зависимости от логики
+//            $table->foreign('repair_type_id')
+//                ->references('id')
+//                ->on('repair_types')
+//                ->onDelete('set null'); // или 'cascade', в зависимости от логики
         });
     }
 
