@@ -19,9 +19,8 @@ const props = defineProps({
       },
     ]"
   >
-    <div class="py-8 flex"
-    >
-      <a href="/">
+    <div class="py-5 flex justify-center">
+      <a href="/" class="uppercase font-bold">
         Логотип
       </a>
     </div>

@@ -21,17 +21,14 @@ Route::get('/redirect', function (\Illuminate\Http\Request $request) {
     ]);
 })->name('redirect');
 
-
-//Route::get('/dashboard', function () {
-//    return Inertia::render('Dashboard');
-//})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::get('/admin/redirect', function (\Illuminate\Http\Request $request) {
     $redirectUrl = $request->session()->get('redirect', '');
     return Inertia::render('Redirect', [
         'redirect' => $redirectUrl
     ]);
 })->name('admin.redirect');
+
+Route::get('properties', [\App\Http\Controllers\App\PropertyController::class, 'index'])->name('properties.index');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin/profile', [ProfileController::class, 'edit'])->name('profile.edit');
