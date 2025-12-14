@@ -3,14 +3,14 @@
 </script>
 
 <template>
-  <header class="bg-white shadow-sm border-b fixed w-full z-10">
+  <header class="bg-white shadow-sm border-b border-b-violet-300 fixed w-full z-10">
     <div class="container mx-auto px-4 py-4 flex items-center justify-between">
       <div class="flex items-center space-x-8">
         <a href="#" class="text-violet-600 text-2xl font-bold uppercase">Триумф</a>
         <nav class="hidden md:flex space-x-6 text-gray-700">
-          <a href="#" class="hover:text-red-600">Жилье в этой части карты</a>
-          <a href="#" class="hover:text-red-600">Неделя</a>
-          <a href="#" class="hover:text-red-600">2 гостя</a>
+          <a href="#" class="hover:text-violet-600">Жилье в этой части карты</a>
+          <a href="#" class="hover:text-violet-600">Неделя</a>
+          <a href="#" class="hover:text-violet-600">2 гостя</a>
         </nav>
       </div>
       <div class="flex items-center space-x-4">
@@ -39,10 +39,10 @@
       <!-- Listing Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 lg:px-0 px-6 gap-6 lg:pt-0 pt-8">
         <!-- Card 1 -->
-        <div class="rounded-2xl overflow-hidden bg-gray-50">
+        <div class="rounded-2xl overflow-hidden bg-violet-50">
           <div class="relative">
             <img src="https://imgholder.ru/400x250/8493a8/adb9ca&text=IMAGE+HOLDER&font=kelson" alt="Квартира" class="w-full h-48 object-cover">
-            <div class="absolute top-2 left-2 bg-white px-2 py-1 rounded-full text-xs font-medium">Выбор гостей</div>
+            <div class="absolute top-2 left-2 text-violet-700 bg-violet-100 px-2 py-1 rounded-full text-xs font-medium">Выбор гостей</div>
             <button class="absolute top-2 right-2 p-2 bg-white rounded-full">
               <i class="far fa-heart text-gray-600"></i>
             </button>
@@ -58,7 +58,7 @@
             <p class="text-sm text-gray-500 mb-2">12–17 дек.</p>
             <div class="flex items-center justify-between">
               <span class="text-sm text-gray-500 line-through">19 440₽</span>
-              <span class="text-lg font-semibold text-red-600">15 552₽</span>
+              <span class="text-lg font-semibold text-violet-700">15 552₽</span>
               <span class="text-sm text-gray-600">за 5 ночей</span>
             </div>
           </div>
