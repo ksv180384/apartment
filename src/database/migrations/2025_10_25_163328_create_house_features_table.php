@@ -17,9 +17,14 @@ return new class extends Migration
 
             // ОСНОВНЫЕ ХАРАКТЕРИСТИКИ
             $table->decimal('land_area', 10, 2)->nullable(); // Площадь участка в сотках
+            $table->integer('building_floors')->nullable(); // Этажность дома
             $table->integer('bedrooms_total')->nullable(); // Количество спален
             $table->string('wall_material')->nullable(); // Материал стен
             $table->string('roof_material')->nullable(); // Материал крыши
+            $table->unsignedBigInteger('finishing_type_id')->nullable()->default(null);
+            $table->decimal('area_living', 10, 2)->nullable()->after('floor'); // Жилая площадь в м²
+            $table->integer('bathrooms_total')->nullable()->after('rooms_total'); // Количество санузлов
+            $table->decimal('ceiling_height', 5, 2)->nullable()->after('bathrooms_total'); // Высота потолков
 
             // КОММУНИКАЦИИ
             $table->boolean('has_electricity')->nullable(); // Электричество

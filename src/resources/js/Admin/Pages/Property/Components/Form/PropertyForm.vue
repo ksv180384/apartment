@@ -94,7 +94,21 @@ const form = reactive({
   latitude: props.property?.latitude  || '',
   longitude: props.property?.longitude  || '',
 });
-const rules = reactive({});
+
+const rules = {
+  title: [
+    { required: true, message: 'Введите название', trigger: 'blur' }
+  ],
+  price: [
+    { required: true, message: 'Введите цену', trigger: 'blur' }
+  ],
+  category_id: [
+    { required: true, message: 'Введите категорию', trigger: 'blur' }
+  ],
+  property_type_id: [
+    { required: true, message: 'Введите вид', trigger: 'blur' }
+  ],
+};
 
 const getSubFormProps = () => {
   if (!propertyTypeActive.value) return {};
@@ -119,7 +133,9 @@ const getSubFormProps = () => {
         finishingTypes: props.finishingTypes,
       };
     case 'doma':
-      return {};
+      return {
+        finishingTypes: props.finishingTypes,
+      };
     case 'kommerceskaia-nedvizimost':
       return {
         commercialTypes: props.commercialTypes,

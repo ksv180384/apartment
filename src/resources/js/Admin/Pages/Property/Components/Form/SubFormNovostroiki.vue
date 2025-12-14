@@ -42,7 +42,7 @@ const rules = {
   finishing_type_id: [
     { required: true, message: 'Введите Telegram', trigger: 'blur' }
   ],
-}
+};
 // Обновление родительского компонента
 const updateParent = () => {
   emits('update', { ...novostroikiForm });
