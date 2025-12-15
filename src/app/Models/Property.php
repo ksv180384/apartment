@@ -32,7 +32,6 @@ class Property extends Model
 
     protected $appends = [
         'formatted_price',
-        'is_favorite',
         'main_image_url'
     ];
 

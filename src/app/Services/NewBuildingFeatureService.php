@@ -8,22 +8,31 @@ use App\Models\NewBuildingFeature;
 class NewBuildingFeatureService
 {
 
-    public function create(array $newBuildingFeature): NewBuildingFeature
+    public function create(array $newBuildingFeatureData): NewBuildingFeature
     {
         $newBuildingFeature = NewBuildingFeature::query()->create([
-            'completion_date' => $newBuildingFeature['completion_date'] ?? null,
-            'building_name' => $newBuildingFeature['building_name'] ?? null,
-            'developer' => $newBuildingFeature['developer'] ?? null,
-            'building_class_id' => $newBuildingFeature['building_class_id'] ?? null,
-            'building_type_id' => $newBuildingFeature['building_type_id'] ?? null,
-            'building_floors' => $newBuildingFeature['building_floors'] ?? null,
-            'apartments_total' => $newBuildingFeature['apartments_total'] ?? null,
-            'finishing_type_id' => $newBuildingFeature['finishing_type_id'] ?? null,
-            'has_installment' => $newBuildingFeature['has_installment'] ?? null,
-            'has_mortgage' => $newBuildingFeature['has_mortgage'] ?? null,
-            'has_balcony' => $newBuildingFeature['has_balcony'] ?? null,
-            'has_loggia' => $newBuildingFeature['has_loggia'] ?? null,
+            'property_id' => $newBuildingFeatureData['property_id'] ?? null,
+            'completion_date' => $newBuildingFeatureData['completion_date'] ?? null,
+            'building_name' => $newBuildingFeatureData['building_name'] ?? null,
+            'developer' => $newBuildingFeatureData['developer'] ?? null,
+            'building_class_id' => $newBuildingFeatureData['building_class_id'] ?? null,
+            'building_type_id' => $newBuildingFeatureData['building_type_id'] ?? null,
+            'building_floors' => $newBuildingFeatureData['building_floors'] ?? null,
+            'apartments_total' => $newBuildingFeatureData['apartments_total'] ?? null,
+            'finishing_type_id' => $newBuildingFeatureData['finishing_type_id'] ?? null,
+            'has_installment' => $newBuildingFeatureData['has_installment'] ?? null,
+            'has_mortgage' => $newBuildingFeatureData['has_mortgage'] ?? null,
+            'has_balcony' => $newBuildingFeatureData['has_balcony'] ?? null,
+            'has_loggia' => $newBuildingFeatureData['has_loggia'] ?? null,
         ]);
+
+        return $newBuildingFeature;
+    }
+
+    public function update(int $id, array $newBuildingFeatureData): NewBuildingFeature
+    {
+        $newBuildingFeature = NewBuildingFeature::query()->findOrFail($id);
+        $newBuildingFeature->update($newBuildingFeatureData);
 
         return $newBuildingFeature;
     }

@@ -2,6 +2,7 @@
 import { Head } from '@inertiajs/vue3';
 
 import AdminLayout from '@/Admin/Layouts/AdminLayout.vue';
+import FlashMessages from '@/Components/FlashMessages.vue';
 import PropertyForm from '@/Admin/Pages/Property/Components/Form/PropertyForm.vue';
 
 defineProps({
@@ -33,6 +34,9 @@ const submit = (form) => {
   <Head title="Добавить недвижимость" />
 
   <AdminLayout header-title="Добавить недвижимость">
+
+    <FlashMessages />
+
     <PropertyForm
       :categories="categories"
       :property-types="propertyTypes"

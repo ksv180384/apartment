@@ -82,7 +82,7 @@ const form = reactive({
   category_id : props.property?.category_id || '',
   property_type_id : props.property?.property_type_id || '',
   property_type_slug : null,
-  is_published: props.property?.is_published  || '',
+  is_published: props.property?.is_published  || true,
   area_total: props.property?.area_total  || '',
   year_built: props.property?.year_built  || '',
   region: props.property?.region  || '',
@@ -132,6 +132,8 @@ const getSubFormProps = () => {
         buildingTypes: props.buildingTypes,
         finishingTypes: props.finishingTypes,
       };
+    case 'ucastki':
+      return {};
     case 'doma':
       return {
         finishingTypes: props.finishingTypes,

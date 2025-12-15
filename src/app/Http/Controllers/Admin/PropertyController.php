@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Property\CreatePropertyRequest;
+use App\Http\Requests\Admin\Property\UpdatePropertyRequest;
 use App\Http\Resources\Admin\BuildingClass\BuildingClassListResource;
 use App\Http\Resources\Admin\BuildingType\BuildingTypeListResource;
 use App\Http\Resources\Admin\Category\CategoryListResource;
@@ -33,6 +34,7 @@ use App\Services\PropertyService;
 use App\Services\PropertyTypeService;
 use App\Services\PurposeService;
 use App\Services\RepairTypeService;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -96,9 +98,29 @@ class PropertyController extends Controller
 
     public function store(CreatePropertyRequest $request, PropertyService $propertyService)
     {
-        $propertyService->create($request->validated());
 
-        return Redirect::route('admin.properties.index');
+        DB::beginTransaction();
+
+        try {
+            $propertyService->create($request->validated());
+
+            DB::commit();
+
+            return Redirect::route('admin.properties.index')
+                ->with('success', 'Недвижимость успешно создана.');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            \Log::error('Ошибка при создании недвижимости: ' . $e->getMessage(), [
+                'exception' => $e,
+                'request_data' => $request->validated()
+            ]);
+
+            return Redirect::back()
+                ->with('error', 'Произошла ошибка при создании недвижимости. Пожалуйста, попробуйте снова.')
+                ->withInput();
+        }
     }
 
     public function edit(
@@ -147,18 +169,55 @@ class PropertyController extends Controller
             'ownershipTypes' => OwnershipTypeListResource::collection($ownershipTypes),
         ]);
     }
-//
-//    public function update(UpdateRepairTypeRequest $request, int $id, RepairTypeService $repairTypeService)
-//    {
-//        $repairTypeService->update($id, $request->validated());
-//
-//        return Redirect::route('admin.repair_types.index');
-//    }
-//
-//    public function destroy(int $id, RepairTypeService $repairTypeService)
-//    {
-//        $repairTypeService->destroy($id);
-//
-//        return Redirect::back();
-//    }
+    public function update(UpdatePropertyRequest $request, int $id, PropertyService $propertyService)
+    {
+        DB::beginTransaction();
+
+        try {
+            $propertyService->update($id, $request->validated());
+
+            DB::commit();
+
+            return Redirect::route('admin.properties.index')
+                ->with('success', 'Недвижимость успешно обновлена.');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            \Log::error('Ошибка при обновлении недвижимости: ' . $e->getMessage(), [
+                'exception' => $e,
+                'property_id' => $id,
+                'request_data' => $request->validated()
+            ]);
+
+            return Redirect::back()
+                ->with('error', 'Произошла ошибка при обновлении недвижимости. Пожалуйста, попробуйте снова.')
+                ->withInput();
+        }
+    }
+
+    public function destroy(int $id, PropertyService $propertyService)
+    {
+        DB::beginTransaction();
+
+        try {
+            $propertyService->destroy($id);
+
+            DB::commit();
+
+            return Redirect::route('admin.properties.index')
+                ->with('success', 'Недвижимость успешно удалена.');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            \Log::error('Ошибка при удалении недвижимости: ' . $e->getMessage(), [
+                'exception' => $e,
+                'property_id' => $id
+            ]);
+
+            return Redirect::back()
+                ->with('error', 'Произошла ошибка при удалении недвижимости. Пожалуйста, попробуйте снова.');
+        }
+    }
 }

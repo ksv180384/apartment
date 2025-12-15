@@ -11,6 +11,7 @@ class LandFeatureService
     public function create(array $landFeatureData): LandFeature
     {
         $landFeature = LandFeature::query()->create([
+            'property_id' => $landFeatureData['property_id'] ?? null,
             'land_area' => $landFeatureData['land_area'] ?? null,
             'land_category' => $landFeatureData['land_category'] ?? null,
             'permitted_use' => $landFeatureData['permitted_use'] ?? null,
@@ -20,6 +21,14 @@ class LandFeatureService
             'has_road_access' => $landFeatureData['has_road_access'] ?? null,
             'has_fence' => $landFeatureData['has_fence'] ?? null,
         ]);
+
+        return $landFeature;
+    }
+
+    public function update(int $id, array $landFeatureData): LandFeature
+    {
+        $landFeature = LandFeature::query()->findOrFail($id);
+        $landFeature->update($landFeatureData);
 
         return $landFeature;
     }

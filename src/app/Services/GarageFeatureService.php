@@ -7,9 +7,10 @@ use App\Models\GarageFeature;
 class GarageFeatureService
 {
 
-    public function crete($garageFeatureData): GarageFeature
+    public function create(array $garageFeatureData): GarageFeature
     {
         $garageFeature = GarageFeature::query()->create([
+            'property_id' => $garageFeatureData['property_id'] ?? null,
             'garage_type_id' => $garageFeatureData['garage_type_id'] ?? null,
             'ownership_type_id' => $garageFeatureData['ownership_type_id'] ?? null,
             'equipment' => $garageFeatureData['equipment'] ?? null,
@@ -20,6 +21,14 @@ class GarageFeatureService
             'has_heating' => $garageFeatureData['has_heating'] ?? null,
             'has_water_supply' => $garageFeatureData['has_water_supply'] ?? null,
         ]);
+
+        return $garageFeature;
+    }
+
+    public function update(int $id, array $garageFeatureData): GarageFeature
+    {
+        $garageFeature = GarageFeature::query()->findOrFail($id);
+        $garageFeature->update($garageFeatureData);
 
         return $garageFeature;
     }

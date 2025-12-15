@@ -11,6 +11,7 @@ class CommercialFeatureService
     public function create(array $commercialFeatureData): CommercialFeature
     {
         $commercialFeature = CommercialFeature::query()->create([
+            'property_id' => $commercialFeatureData['property_id'] ?? null,
             'commercial_type_id' => $commercialFeatureData['commercial_type_id'] ?? null,
             'purpose_id' => $commercialFeatureData['purpose_id'] ?? null,
             'parking_spaces' => $commercialFeatureData['parking_spaces'] ?? null,
@@ -20,6 +21,14 @@ class CommercialFeatureService
             'has_security' => $commercialFeatureData['has_security'] ?? null,
             'has_parking' => $commercialFeatureData['has_parking'] ?? null,
         ]);
+
+        return $commercialFeature;
+    }
+
+    public function update(int $id, array $commercialFeatureData): CommercialFeature
+    {
+        $commercialFeature = CommercialFeature::query()->findOrFail($id);
+        $commercialFeature->update($commercialFeatureData);
 
         return $commercialFeature;
     }

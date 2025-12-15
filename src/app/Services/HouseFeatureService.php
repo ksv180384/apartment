@@ -11,6 +11,7 @@ class HouseFeatureService
     public function create(array $houseFeatureData): HouseFeature
     {
         $houseFeature = HouseFeature::query()->create([
+            'property_id' => $garageFeatureData['property_id'] ?? null,
             'land_area' => $houseFeatureData['land_area'] ?? null,
             'bedrooms_total' => $houseFeatureData['bedrooms_total'] ?? null,
             'wall_material' => $houseFeatureData['wall_material'] ?? null,
@@ -39,6 +40,14 @@ class HouseFeatureService
             'has_playground' => $houseFeatureData['has_playground'] ?? null,
             'has_parking' => $houseFeatureData['has_parking'] ?? null,
         ]);
+
+        return $houseFeature;
+    }
+
+    public function update(int $id, array $houseFeatureData): HouseFeature
+    {
+        $houseFeature = HouseFeature::query()->findOrFail($id);
+        $houseFeature->update($houseFeatureData);
 
         return $houseFeature;
     }
