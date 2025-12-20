@@ -9,6 +9,7 @@ import SubFormDoma from '@/Admin/Pages/Property/Components/Form/SubFormDoma.vue'
 import SubFormUcastki from '@/Admin/Pages/Property/Components/Form/SubFormUcastki.vue';
 import SubFormKommerceskaiaNedvizimost from '@/Admin/Pages/Property/Components/Form/SubFormKommerceskaiaNedvizimost.vue';
 import SubFormGarazi from '@/Admin/Pages/Property/Components/Form/SubFormGarazi.vue';
+import UploadImages from '@/Admin/Components/UploadImages/UploadImages.vue';
 
 const props = defineProps({
   property: { type: Object, default: null },
@@ -26,13 +27,14 @@ const props = defineProps({
   ownershipTypes: { type: Array, default: [] },
   errors: { type: Object, default: {} }
 });
-const emits = defineEmits(['submit']);
+const emits = defineEmits(['submit', 'removeUploadedImg']);
 
 const refForm = ref();
 const refSubForm = ref();
 const refInputName = ref();
 
 const propertyTypeActive = ref(null);
+const media = ref(props.property.media);
 
 const subFormComponent = computed(() => {
   if (['novostroiki'].includes(propertyTypeActive.value?.slug)) {
@@ -71,6 +73,7 @@ const inertiaForm = useForm({
   street: null,
   house_number: null,
   apartment_number: null,
+  images: null,
   latitude: null,
   longitude: null,
   sub_data: null,
@@ -85,14 +88,16 @@ const form = reactive({
   is_published: props.property?.is_published  || true,
   area_total: props.property?.area_total  || '',
   year_built: props.property?.year_built  || '',
-  region: props.property?.region  || '',
-  city: props.property?.city  || '',
-  district: props.property?.district  || '',
-  street: props.property?.street  || '',
-  house_number: props.property?.house_number  || '',
-  apartment_number: props.property?.apartment_number  || '',
-  latitude: props.property?.latitude  || '',
-  longitude: props.property?.longitude  || '',
+  region: props.property?.address?.region  || '',
+  city: props.property?.address?.city  || '',
+  district: props.property?.address?.district  || '',
+  street: props.property?.address?.street  || '',
+  house_number: props.property?.address?.house_number  || '',
+  apartment_number: props.property?.address?.apartment_number  || '',
+  latitude: props.property?.address?.latitude  || '',
+  longitude: props.property?.address?.longitude  || '',
+  images: props.property?.images || [],
+  sub_data: props.property?.sub_data  || null,
 });
 
 const rules = {
@@ -198,10 +203,17 @@ const submit = async () => {
   inertiaForm.street = form.street;
   inertiaForm.house_number = form.house_number;
   inertiaForm.apartment_number = form.apartment_number;
+  inertiaForm.images = form.images instanceof FileList ? form.images : null;
   inertiaForm.latitude = form.latitude;
   inertiaForm.longitude = form.longitude;
 
   emits('submit', inertiaForm);
+}
+
+const removeUploadedImg = (idImg) => {
+
+  emits('removeUploadedImg', idImg);
+
 }
 
 watch(
@@ -219,6 +231,16 @@ onMounted(() => {
   nextTick(() => {
     refInputName.value.focus();
   });
+  // Устанавливаем активный тип недвижимости при загрузке
+  if (props.property?.property_type_id) {
+    propertyTypeActive.value = props.propertyTypes.find(
+      item => item.id === props.property.property_type_id
+    );
+
+    if (propertyTypeActive.value?.slug) {
+      form.property_type_slug = propertyTypeActive.value.slug;
+    }
+  }
 });
 </script>
 
@@ -229,6 +251,15 @@ onMounted(() => {
   :rules="rules"
   @submit.prevent="submit"
 >
+  <div class="flex flex-row lg:flex-col">
+
+    <UploadImages
+      v-model="form.images"
+      :images-uploaded="media"
+      @removeUploadedImg="removeUploadedImg"
+    />
+
+  </div>
   <div class="flex flex-col">
     <div class="flex md:flex-row flex-col gap-4">
       <div class="flex-1">

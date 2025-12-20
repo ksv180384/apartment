@@ -1,0 +1,86 @@
+<script setup>
+import { Head } from '@inertiajs/vue3';
+
+import AdminLayout from '@/Admin/Layouts/AdminLayout.vue';
+import FlashMessages from '@/Components/FlashMessages.vue';
+import PropertyForm from '@/Admin/Pages/Property/Components/Form/PropertyForm.vue';
+
+const {
+  property,
+  categories,
+  propertyTypes,
+  conditions,
+  repairTypes,
+  buildingClasses,
+  buildingTypes,
+  finishingTypes,
+  commercialTypes,
+  purposes,
+  layoutTypes,
+  garageTypes,
+  ownershipTypes,
+  errors,
+} = defineProps({
+  property: { type: Object, required: true },
+  categories: { type: Array, default: [] },
+  propertyTypes: { type: Array, default: [] },
+  conditions: { type: Array, default: [] },
+  repairTypes: { type: Array, default: [] },
+  buildingClasses: { type: Array, default: [] },
+  buildingTypes: { type: Array, default: [] },
+  finishingTypes: { type: Array, default: [] },
+  commercialTypes: { type: Array, default: [] },
+  purposes: { type: Array, default: [] },
+  layoutTypes: { type: Array, default: [] },
+  garageTypes: { type: Array, default: [] },
+  ownershipTypes: { type: Array, default: [] },
+  errors: { type: Object, default: {} },
+});
+
+console.log(property);
+
+const submit = (form) => {
+  form.post(route('admin.properties.update', property.id), {
+    onFinish: (res) => {
+
+    }
+  });
+}
+
+const removeUploadedImg = (idImg) => {
+  console.log(idImg);
+}
+</script>
+
+<template>
+  <Head :title="`Редактировать недвижимость ${property.title}`" />
+
+  <AdminLayout :header-title="`Редактировать недвижимость ${property.title}`">
+
+    <FlashMessages />
+
+    <PropertyForm
+      :property="property"
+      :categories="categories"
+      :property-types="propertyTypes"
+      :conditions="conditions"
+      :repair-types="repairTypes"
+      :building-classes="buildingClasses"
+      :building-types="buildingTypes"
+      :finishing-types="finishingTypes"
+      :commercial-types="commercialTypes"
+      :purposes="purposes"
+      :layout-types="layoutTypes"
+      :garage-types="garageTypes"
+      :ownership-types="ownershipTypes"
+      :errors="errors"
+      @submit="submit"
+      @removeUploadedImg="removeUploadedImg"
+    />
+
+  </AdminLayout>
+</template>
+
+<style scoped>
+
+</style>

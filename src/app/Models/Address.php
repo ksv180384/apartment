@@ -19,6 +19,7 @@ class Address extends Model
         'latitude',
         'longitude'
     ];
+    public $timestamps = false;
 
     protected $casts = [
         'latitude' => 'decimal:8',
@@ -29,7 +30,6 @@ class Address extends Model
         'full_address',
         'short_address',
         'city_district',
-        'street_house',
         'coordinates',
         'has_coordinates',
         'map_url'

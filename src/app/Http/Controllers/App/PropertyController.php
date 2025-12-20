@@ -14,7 +14,6 @@ class PropertyController extends Controller
     {
         $properties = $propertyService->propertiesPagination();
 
-
         return Inertia::render('Property/Properties', [
             'properties' => PropertyResource::collection($properties->items()),
             'pagination' => PaginationResource::make($properties),

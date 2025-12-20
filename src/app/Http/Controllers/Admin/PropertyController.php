@@ -14,6 +14,7 @@ use App\Http\Resources\Admin\FinishingType\FinishingTypeListResource;
 use App\Http\Resources\Admin\GarageType\GarageTypeListResource;
 use App\Http\Resources\Admin\LayoutType\LayoutTypeListResource;
 use App\Http\Resources\Admin\OwnershipType\OwnershipTypeListResource;
+use App\Http\Resources\Admin\Property\PropertyEditResource;
 use App\Http\Resources\Admin\Property\PropertyResource;
 use App\Http\Resources\Admin\PropertyType\PropertyTypeListResource;
 use App\Http\Resources\Admin\Purpose\PurposeListResource;
@@ -43,7 +44,6 @@ class PropertyController extends Controller
     public function index(PropertyService $propertyService)
     {
         $properties = $propertyService->propertiesPagination();
-
 
         return Inertia::render('Property/Properties', [
             'properties' => PropertyResource::collection($properties->items()),
@@ -101,7 +101,7 @@ class PropertyController extends Controller
 
         DB::beginTransaction();
 
-        try {
+//        try {
             $propertyService->create($request->validated());
 
             DB::commit();
@@ -109,22 +109,24 @@ class PropertyController extends Controller
             return Redirect::route('admin.properties.index')
                 ->with('success', 'Недвижимость успешно создана.');
 
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            \Log::error('Ошибка при создании недвижимости: ' . $e->getMessage(), [
-                'exception' => $e,
-                'request_data' => $request->validated()
-            ]);
-
-            return Redirect::back()
-                ->with('error', 'Произошла ошибка при создании недвижимости. Пожалуйста, попробуйте снова.')
-                ->withInput();
-        }
+//        } catch (\Exception $e) {
+//            DB::rollBack();
+//
+//            \Log::error('Ошибка при создании недвижимости: ' . $e->getMessage(), [
+////                'exception' => $e,
+//                'request_data' => $request->validated(),
+//                'trace' => $e->getTrace(),
+//            ]);
+//
+//            return Redirect::back()
+//                ->with('error', 'Произошла ошибка при создании недвижимости. Пожалуйста, попробуйте снова.')
+//                ->withInput();
+//        }
     }
 
     public function edit(
         int $id,
+        PropertyService $propertyService,
         CategoryService $categoryService,
         PropertyTypeService $propertyTypeService,
         ConditionService $conditionService,
@@ -139,7 +141,7 @@ class PropertyController extends Controller
         OwnershipTypeService $ownershipTypeService
     )
     {
-        $property = Property::query()->findOrFail($id);
+        $property = $propertyService->getById($id);
         $categories = $categoryService->categoriesList();
         $propertyTypes = $propertyTypeService->PropertyTypesList();
         $conditions = $conditionService->conditionsList();
@@ -154,7 +156,7 @@ class PropertyController extends Controller
         $ownershipTypes = $ownershipTypeService->ownershipTypesList();
 
         return Inertia::render('Property/EditProperty', [
-            'property' => $property,
+            'property' => PropertyEditResource::make($property),
             'categories' => CategoryListResource::collection($categories),
             'propertyTypes' => PropertyTypeListResource::collection($propertyTypes),
             'conditions' => ConditionListResource::collection($conditions),

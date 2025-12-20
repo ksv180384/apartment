@@ -5,7 +5,7 @@ namespace App\Http\Resources\Admin\Property;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PropertyResource extends JsonResource
+class PropertyEditResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,15 +17,15 @@ class PropertyResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'description' => $this->description,
             'price' => $this->price,
-            'category' => $this->category->name ?? '',
-            'property_type' => $this->propertyType->name ?? '',
-            'property_slug' => $this->propertyType->slug ?? '',
-            'user' => $this->user->email ?? '',
-            'image_main' => $this->main_image_url ?? '',
-            'address' => $this->address->fullAddress ?? '',
+            'category_id' => $this->category_id,
+            'property_type_id' => $this->property_type_id,
+            'user_id' => $this->user_id,
             'is_published' => $this->is_published,
             'views_count' => $this->views_count,
+            'media' => $this->image_url_all,
+            'address' => $this->address,
             'sub_data' => $this->sub_data,
         ];
     }

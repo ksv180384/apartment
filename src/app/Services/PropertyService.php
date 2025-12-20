@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Condition;
+use App\Models\Media;
 use App\Models\Property;
 use App\Models\RepairType;
 use App\Services\Features\FeatureStrategyFactory;
@@ -15,10 +16,24 @@ class PropertyService
     public function propertiesPagination(): \Illuminate\Pagination\LengthAwarePaginator
     {
         $properties = Property::query()
+            ->with([
+                'category:id,name',
+                'propertyType:id,name,slug',
+                'user:id,email',
+                'address',
+                'media',
+            ])
             ->orderBy('created_at')
             ->paginate(self::PAGINATION_LIMIT);
 
         return $properties;
+    }
+
+    public function getById(int $id): Property
+    {
+        $property = Property::query()->findOrFail($id);
+
+        return $property;
     }
 
     public function create(array $propertyData): Property
@@ -27,6 +42,20 @@ class PropertyService
 
         // Обрабатываем дополнительные данные если они есть
         $this->processFeatureData($property, $propertyData);
+
+        (new AddressService())->create([
+            'property_id' => $property->id,
+            'region' => $propertyData['region'] ?? null,
+            'city' => $propertyData['city'] ?? null,
+            'street' => $propertyData['street'] ?? null,
+            'house_number' => $propertyData['house_number'] ?? null,
+            'apartment_number' => $propertyData['apartment_number'] ?? null,
+            'latitude' => $propertyData['latitude'] ?? null,
+            'longitude' => $propertyData['longitude'] ?? null,
+        ]);
+
+        // Обрабатываем изображения для слайдера
+        $this->processImages($propertyData['images'], $property);
 
         return $property;
     }
@@ -85,5 +114,32 @@ class PropertyService
         } else {
             $strategy->create($property, $propertyData['sub_data']);
         }
+    }
+
+    private function processImages(array $images, Property $property): void
+    {
+        if (empty($images)) {
+            return;
+        }
+
+        $imageUploadService = new ImageUploadService();
+        $imagesToInsert = [];
+
+        foreach ($images as $index => $image) {
+            $fileName = $imageUploadService->uploadImage($image, $property->getImagesDir());
+            $imagesToInsert[] = [
+                'property_id' => $property->id,
+                'is_main' => $index === 0, // первое изображение - главное
+                'file_path' => $property->getImagesDir(),
+                'file_name' => $fileName,
+                'type' => 'image',
+                'order' => $index,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
+
+        // Массовая вставка для оптимизации
+        Media::insert($imagesToInsert);
     }
 }

@@ -1,12 +1,12 @@
 <script setup>
 import { Head, Link, router } from '@inertiajs/vue3';
-import { Delete } from '@element-plus/icons-vue';
 import { ElMessage } from 'element-plus';
 
 import AdminLayout from '@/Admin/Layouts/AdminLayout.vue';
+import CardProperty from '@/Admin/Components/CardProperty.vue';
 
-defineProps({
-  purposes: { type: Array, required: [] },
+const { properties } = defineProps({
+  properties: { type: Array, default: [] },
 });
 
 const deleteItem = (id) => {
@@ -38,36 +38,12 @@ const deleteItem = (id) => {
       </div>
     </div>
 
-    <div class="flex-1">
-      <div
-        v-for="purpose in purposes"
-        class="flex flex-row px-4 hover:bg-gray-50 items-center"
-      >
-        <Link
-          :href="route('admin.properties.edit', { id: purpose.id })"
-          :key="purpose.id"
-          class="flex-1 block py-3"
-        >
-          {{ purpose.name }}
-        </Link>
-        <el-popconfirm
-          confirm-button-text="Да"
-          cancel-button-text="Нет"
-          confirm-button-type="danger"
-          hide-icon
-          title="Удалить?"
-          @confirm="deleteItem(purpose.id)"
-        >
-          <template #reference>
-            <el-button
-              type="danger"
-              plain
-              :icon="Delete"
-              size="small"
-            />
-          </template>
-        </el-popconfirm>
-      </div>
+    <div class="flex flex-row px-4 gap-4">
+      <template v-for="property in properties" :key="property.id">
+
+        <CardProperty :property="property" />
+
+      </template>
     </div>
   </AdminLayout>
 </template>

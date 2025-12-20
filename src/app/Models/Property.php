@@ -46,7 +46,7 @@ class Property extends Model
     /**
      * Тип сделки (Продажа, Аренда)
      */
-    public function categories(): BelongsTo
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
@@ -115,6 +115,11 @@ class Property extends Model
         return $this->hasMany(Media::class)->orderBy('order');
     }
 
+    public function getImagesDir()
+    {
+        return 'property/' . $this->id . '/images/';
+    }
+
     /**
      * Accessors & Mutators
      */
@@ -151,7 +156,41 @@ class Property extends Model
             $mainImage = $this->media->first();
         }
 
-        return $mainImage ? asset('storage/' . $mainImage->file_path) : null;
+        return $mainImage ? asset('storage/' . $mainImage->file_path . $mainImage->file_name) : 'https://imgholder.ru/400x250/8493a8/adb9ca&text=IMAGE+HOLDER&font=kelson';
+    }
+
+    public function getImageUrlAllAttribute()
+    {
+        if(!$this->media){
+            return null;
+        }
+
+        return $this->media->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'path' => asset('storage/' . $item->file_path . $item->file_name),
+                'is_main' => $item->is_main,
+                'order' => $item->order,
+            ];
+        });
+    }
+
+    public function getImageUrlAttribute()
+    {
+        if(!$this->media){
+            return null;
+        }
+
+        return $this->media->filter(function ($item) {
+            return !$item->is_main;
+        })->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'path' => asset('storage/' . $item->file_path . $item->file_name),
+                'is_main' => $item->is_main,
+                'order' => $item->order,
+            ];
+        });
     }
 
     /**
@@ -174,6 +213,45 @@ class Property extends Model
 
         return implode(', ', array_filter($parts));
     }
+
+    /**
+     * Получить slug типа недвижимости
+     */
+    public function getPropertyTypeSlugAttribute(): ?string
+    {
+        return $this->propertyType?->slug;
+    }
+
+    /**
+     * Получить все специфичные характеристики для данного типа недвижимости
+     */
+    public function getSubDataAttribute()
+    {
+        $subData = null;
+
+        switch ($this->property_type_slug) {
+            case 'novostroiki':
+            case 'kvartiry':
+            case 'komnaty':
+                $subData = $this->newBuildingFeatures;
+                break;
+            case 'doma':
+                $subData = $this->houseFeatures;
+                break;
+            case 'uchastki':
+                $subData = $this->landFeatures;
+                break;
+            case 'kommerceskaia-nedvizimost':
+                $subData = $this->commercialFeatures;
+                break;
+            case 'garazi':
+                $subData = $this->garageFeatures;
+                break;
+        }
+
+        return $subData;
+    }
+
 
     /**
      * Methods
