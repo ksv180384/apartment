@@ -13,7 +13,6 @@ class PropertyFeature extends Model
         'property_id',
         'area_total', // Общая площадь в м²
         'year_built', // Год постройки
-        'condition_id', // Состояние: 'черновая', 'чистовая', 'требует ремонта'
     ];
 
     protected $casts = [
@@ -22,11 +21,6 @@ class PropertyFeature extends Model
 
     protected $appends = [
         'area_total_formatted',
-        'area_living_formatted',
-        'floor_formatted',
-        'rooms_formatted',
-        'condition_label',
-        'repair_type_label'
     ];
 
     /**

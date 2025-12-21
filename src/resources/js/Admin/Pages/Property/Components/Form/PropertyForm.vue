@@ -34,7 +34,7 @@ const refSubForm = ref();
 const refInputName = ref();
 
 const propertyTypeActive = ref(null);
-const media = ref(props.property.media);
+const media = ref(props.property?.media || null);
 
 const subFormComponent = computed(() => {
   if (['novostroiki'].includes(propertyTypeActive.value?.slug)) {
@@ -301,7 +301,13 @@ onMounted(() => {
           required
           :error="errors?.property_type_id || null"
         >
-          <el-select v-model="form.property_type_id" placeholder="Вид недвижимости" clearable filterable>
+          <el-select
+            v-model="form.property_type_id"
+            placeholder="Вид недвижимости"
+            clearable
+            filterable
+            :disabled="property?.id"
+          >
             <el-option
               v-for="propertyType in propertyTypes"
               :key="propertyType.id"
@@ -324,9 +330,11 @@ onMounted(() => {
         <el-form-item label="Год постройки" label-position="top" prop="completion_date" :error="errors?.year_built || null">
           <el-date-picker
             v-model="form.year_built"
-            type="date"
+            type="year"
             clearable
             placeholder="Год постройки"
+            format="YYYY"
+            value-format="YYYY"
           />
         </el-form-item>
       </div>

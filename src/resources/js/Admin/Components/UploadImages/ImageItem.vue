@@ -14,7 +14,7 @@ const removeImg = () => {
 </script>
 
 <template>
-  <div class="overflow-hidden w-40 rounded-sm relative group shadow-lg border border-gray-300">
+  <div class="overflow-hidden w-40 h-fit rounded-sm relative group shadow-lg border border-gray-300">
     <el-button
       type="danger"
       class="opacity-0 group-hover:opacity-100 transition-opacity absolute top-1 right-1 z-10"

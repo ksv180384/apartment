@@ -39,6 +39,10 @@ class PropertyService
     public function create(array $propertyData): Property
     {
         $property = Property::query()->create($propertyData);
+        $propertyData['property_id'] = $property->id;
+
+        // Дополнительные параметры
+        (new PropertyFeatureService())->create($propertyData);
 
         // Обрабатываем дополнительные данные если они есть
         $this->processFeatureData($property, $propertyData);
@@ -55,7 +59,7 @@ class PropertyService
         ]);
 
         // Обрабатываем изображения для слайдера
-        $this->processImages($propertyData['images'], $property);
+        $this->processImages($property, $propertyData['images']);
 
         return $property;
     }
@@ -65,8 +69,27 @@ class PropertyService
         $property = Property::query()->findOrFail($id);
 
         $property->update($propertyData);
+        $propertyData['property_id'] = $property->id;
+
+        // Дополнительные параметры
+        (new PropertyFeatureService())->update($property->features?->id, $propertyData);
+
         // Обрабатываем дополнительные данные если они есть
         $this->processFeatureData($property, $propertyData, true);
+
+        (new AddressService())->update($property->address->id, [
+            'property_id' => $propertyData['property_id'],
+            'region' => $propertyData['region'] ?? null,
+            'city' => $propertyData['city'] ?? null,
+            'street' => $propertyData['street'] ?? null,
+            'house_number' => $propertyData['house_number'] ?? null,
+            'apartment_number' => $propertyData['apartment_number'] ?? null,
+            'latitude' => $propertyData['latitude'] ?? null,
+            'longitude' => $propertyData['longitude'] ?? null,
+        ]);
+
+        // Обрабатываем изображения для слайдера
+        $this->processImages($property, $propertyData['images']);
 
         return $property;
     }
@@ -116,7 +139,7 @@ class PropertyService
         }
     }
 
-    private function processImages(array $images, Property $property): void
+    private function processImages(Property $property, array $images = null): void
     {
         if (empty($images)) {
             return;

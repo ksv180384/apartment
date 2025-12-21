@@ -7,8 +7,6 @@ import ApHeader from '@/Admin/Layouts/ApHeader.vue';
 const props = defineProps({
   headerTitle: { type: String, default: '' },
 });
-const showingNavigationDropdown = ref(false);
-
 
 const isMobile = ref(false);
 const isMobileOpen = ref(false);

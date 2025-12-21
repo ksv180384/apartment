@@ -56,7 +56,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin/properties/create', [\App\Http\Controllers\Admin\PropertyController::class, 'create'])->name('admin.properties.create');
     Route::post('/admin/properties/store', [\App\Http\Controllers\Admin\PropertyController::class, 'store'])->name('admin.properties.store');
     Route::get('/admin/properties/edit/{id}', [\App\Http\Controllers\Admin\PropertyController::class, 'edit'])->name('admin.properties.edit');
-    Route::put('/admin/properties/update/{id}', [\App\Http\Controllers\Admin\PropertyController::class, 'update'])->name('admin.properties.update');
+    Route::post('/admin/properties/update/{id}', [\App\Http\Controllers\Admin\PropertyController::class, 'update'])->name('admin.properties.update');
     Route::delete('/admin/properties/destroy/{id}', [\App\Http\Controllers\Admin\PropertyController::class, 'destroy'])->name('admin.properties.destroy');
 
     Route::get('/admin/parameters', [\App\Http\Controllers\Admin\ParameterController::class, 'index'])->name('admin.parameters.index');

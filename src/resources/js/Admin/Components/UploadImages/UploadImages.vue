@@ -146,7 +146,7 @@ watch(
 
     </div>
 
-    <div class="flex flex-wrap w-full gap-1 overflow-auto">
+    <div class="flex flex-row h-fit max-h-full flex-wrap w-full gap-1 overflow-auto">
       <template v-for="(image, index) in images">
         <ImageItem
           :image="image"

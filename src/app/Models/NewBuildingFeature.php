@@ -32,8 +32,8 @@ class NewBuildingFeature extends Model
     ];
 
     protected $casts = [
-        'area_living' => 'decimal:2',
-        'area_kitchen' => 'decimal:2',
+        'area_living' => 'decimal:0',
+        'area_kitchen' => 'decimal:0',
         'floor' => 'integer',
         'floors_total' => 'integer',
         'rooms_total' => 'integer',
@@ -43,6 +43,8 @@ class NewBuildingFeature extends Model
         'apartments_total' => 'integer', //
         'has_installment' => 'boolean', //
         'has_mortgage' => 'boolean', //
+        'has_balcony' => 'boolean', //
+        'has_loggia' => 'boolean', //
     ];
 
     /**

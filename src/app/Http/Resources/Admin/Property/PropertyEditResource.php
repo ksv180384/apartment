@@ -24,6 +24,8 @@ class PropertyEditResource extends JsonResource
             'user_id' => $this->user_id,
             'is_published' => $this->is_published,
             'views_count' => $this->views_count,
+            'area_total' => $this->features?->area_total ?? null,
+            'year_built' => $this->features?->year_built ? (string)$this->features->year_built :  null,
             'media' => $this->image_url_all,
             'address' => $this->address,
             'sub_data' => $this->sub_data,
