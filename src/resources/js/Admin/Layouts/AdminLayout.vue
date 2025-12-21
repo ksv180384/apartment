@@ -3,6 +3,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 
 import ApSidebar from "@/Admin/Layouts/ApSidebar.vue";
 import ApHeader from '@/Admin/Layouts/ApHeader.vue';
+import FlashMessages from '@/Components/FlashMessages.vue';
 
 const props = defineProps({
   headerTitle: { type: String, default: '' },
@@ -43,6 +44,9 @@ onUnmounted(() => {
       { 'overflow-hidden': isMobileOpen }
     ]"
   >
+
+    <FlashMessages />
+
     <ApSidebar
       :isMobile="isMobile"
       :isMobileOpen="isMobileOpen"

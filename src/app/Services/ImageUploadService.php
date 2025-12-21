@@ -38,4 +38,9 @@ class ImageUploadService
     {
         Storage::delete($directory. '/' .$fileName);
     }
+
+    public function deleteDirectory(string $directory): void
+    {
+        Storage::delete($directory);
+    }
 }

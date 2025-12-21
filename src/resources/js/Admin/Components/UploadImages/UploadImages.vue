@@ -154,7 +154,7 @@ watch(
           @remove="removeImg"
         />
       </template>
-      <template v-for="imageUploaded in imagesUploaded">
+      <template v-for="imageUploaded in imagesUploaded" :key="imageUploaded.id">
         <ImageItem
           :image="imageUploaded.path"
           :index="imageUploaded.id"

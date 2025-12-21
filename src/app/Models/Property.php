@@ -166,7 +166,7 @@ class Property extends Model
         }
 
         return $this->media->map(function ($item) {
-            return [
+            return (object)[
                 'id' => $item->id,
                 'path' => asset('storage/' . $item->file_path . $item->file_name),
                 'is_main' => $item->is_main,

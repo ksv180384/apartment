@@ -8,13 +8,17 @@ const clearFlash = () => {
 }
 
 // Автоматическое скрытие через 5 секунд
-watch(() => usePage().props.flash, (flash) => {
-  if (flash.success || flash.error) {
-    setTimeout(() => {
-      clearFlash()
-    }, 10000)
-  }
-}, { deep: true })
+watch(
+  () => usePage().props.flash,
+  (flash) => {
+      if (flash.success || flash.error) {
+        setTimeout(() => {
+          clearFlash()
+        }, 10000)
+      }
+  },
+  { deep: true }
+)
 </script>
 
 <template>

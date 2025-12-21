@@ -1,8 +1,7 @@
 <script setup>
-import { Head } from '@inertiajs/vue3';
+import {Head, router} from '@inertiajs/vue3';
 
 import AdminLayout from '@/Admin/Layouts/AdminLayout.vue';
-import FlashMessages from '@/Components/FlashMessages.vue';
 import PropertyForm from '@/Admin/Pages/Property/Components/Form/PropertyForm.vue';
 
 const {
@@ -37,8 +36,6 @@ const {
   errors: { type: Object, default: {} },
 });
 
-console.log(property);
-
 const submit = (form) => {
   form.post(route('admin.properties.update', property.id), {
     onFinish: (res) => {
@@ -47,8 +44,12 @@ const submit = (form) => {
   });
 }
 
-const removeUploadedImg = (idImg) => {
-  console.log(idImg);
+const removeUploadedImg = async (idImg) => {
+
+  router.delete(route('admin.media.delete', { id: idImg }), {
+    preserveScroll: true, // Сохраняет позицию скролла
+  });
+
 }
 </script>
 
@@ -56,8 +57,6 @@ const removeUploadedImg = (idImg) => {
   <Head :title="`Редактировать недвижимость ${property.title}`" />
 
   <AdminLayout :header-title="`Редактировать недвижимость ${property.title}`">
-
-    <FlashMessages />
 
     <PropertyForm
       :property="property"

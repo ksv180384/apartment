@@ -113,7 +113,6 @@ class PropertyController extends Controller
             DB::rollBack();
 
             \Log::error('Ошибка при создании недвижимости: ' . $e->getMessage(), [
-//                'exception' => $e,
                 'request_data' => $request->validated(),
                 'trace' => $e->getTrace(),
             ]);
@@ -187,7 +186,6 @@ class PropertyController extends Controller
             DB::rollBack();
 
             \Log::error('Ошибка при обновлении недвижимости: ' . $e->getMessage(), [
-                'exception' => $e,
                 'property_id' => $id,
                 'request_data' => $request->validated()
             ]);
@@ -214,7 +212,6 @@ class PropertyController extends Controller
             DB::rollBack();
 
             \Log::error('Ошибка при удалении недвижимости: ' . $e->getMessage(), [
-                'exception' => $e,
                 'property_id' => $id
             ]);
 

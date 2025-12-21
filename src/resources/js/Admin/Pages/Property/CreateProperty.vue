@@ -35,8 +35,6 @@ const submit = (form) => {
 
   <AdminLayout header-title="Добавить недвижимость">
 
-    <FlashMessages />
-
     <PropertyForm
       :categories="categories"
       :property-types="propertyTypes"

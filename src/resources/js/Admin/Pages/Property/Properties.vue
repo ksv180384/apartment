@@ -4,6 +4,7 @@ import { ElMessage } from 'element-plus';
 
 import AdminLayout from '@/Admin/Layouts/AdminLayout.vue';
 import CardProperty from '@/Admin/Components/CardProperty.vue';
+import FlashMessages from "@/Components/FlashMessages.vue";
 
 const { properties } = defineProps({
   properties: { type: Array, default: [] },
@@ -25,6 +26,7 @@ const deleteItem = (id) => {
   <Head title="Список назначений" />
 
   <AdminLayout header-title="Список назначений">
+
     <div class="flex justify-between py-3">
       <div>
 

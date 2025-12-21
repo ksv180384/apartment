@@ -227,6 +227,13 @@ watch(
   },
 );
 
+watch(
+  () => props.property?.media,
+  (newMedia) => {
+    media.value = newMedia;
+  }
+)
+
 onMounted(() => {
   nextTick(() => {
     refInputName.value.focus();

@@ -145,18 +145,42 @@ class PropertyService
             return;
         }
 
+        // Проверяем, есть ли уже главное изображение у этого свойства
+        $hasMainImage = Media::where('property_id', $property->id)
+            ->where('is_main', true)
+            ->exists();
+
         $imageUploadService = new ImageUploadService();
         $imagesToInsert = [];
 
+        // Получаем текущий максимальный order из БД
+        $currentMaxOrder = Media::where('property_id', $property->id)->max('order') ?? 0;
+
         foreach ($images as $index => $image) {
             $fileName = $imageUploadService->uploadImage($image, $property->getImagesDir());
+
+            // Рассчитываем order: текущий максимальный + позиция в массиве + 1
+            $order = $currentMaxOrder + $index + 1;
+
+            // Определяем, является ли изображение главным
+            $isMain = false;
+            if ($index === 0 && !$hasMainImage) {
+                $isMain = true;
+            }
+
+            // Если это уже второе и последующие изображения, не делаем главным
+            // (даже если главного не было и index === 0 у второго пакета)
+            if ($index > 0) {
+                $isMain = false;
+            }
+
             $imagesToInsert[] = [
                 'property_id' => $property->id,
-                'is_main' => $index === 0, // первое изображение - главное
+                'is_main' => $isMain,
                 'file_path' => $property->getImagesDir(),
                 'file_name' => $fileName,
                 'type' => 'image',
-                'order' => $index,
+                'order' => $order,
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
