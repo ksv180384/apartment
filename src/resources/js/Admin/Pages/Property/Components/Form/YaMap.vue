@@ -45,7 +45,6 @@ const onDragEnd = async (e) => {
 };
 
 const handleSearchResult = (results) => {
-  console.log(results)
   if (results && results.length > 0) {
     const firstResult = results[0];
     if (firstResult.geometry?.coordinates) {

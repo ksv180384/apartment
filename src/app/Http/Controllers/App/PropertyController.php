@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Admin\Property\PropertyResource;
+use App\Http\Resources\App\Property\PropertyResource;
 use App\Http\Resources\PaginationResource;
 use App\Services\PropertyService;
 use Inertia\Inertia;

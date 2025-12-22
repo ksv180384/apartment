@@ -1,10 +1,61 @@
 <script setup>
+import { ref } from 'vue';
+
+import YaMapList from '@/App/Components/YaMapList.vue';
+
 const { properties, pagination } = defineProps({
   properties: { type: Object, required: true },
   pagination: { type: Object, required: true },
 });
 
-console.log(properties)
+const hoverMarker = ref(0);
+const markers = ref(properties.map(item => {
+  return {
+    id: item.id,
+    coordinates: item.coordinates,
+    price: item.price,
+    active: false,
+  }
+}));
+
+const onMouseEnterCard = (id) => {
+  markers.value = markers.value.map(item => {
+    if(item.id === id){
+      item.active = true;
+    }
+    return item;
+  });
+}
+
+const onMouseLeaveCard = () => {
+  markers.value = markers.value.map(item => {
+    item.active = false;
+    return item;
+  });
+}
+
+const markerMouseEnter = (id) => {
+  markers.value = markers.value.map(item => {
+    if(item.id === id){
+      item.hover = true;
+    }
+    return item;
+  });
+  hoverMarker.value = id;
+}
+
+const markerMouseLeave = (id) => {
+  markers.value = markers.value.map(item => {
+    item.hover = false;
+    return item;
+  });
+  hoverMarker.value = 0;
+}
+
+const markerClick = (id) => {
+
+}
+
 </script>
 
 <template>
@@ -42,10 +93,17 @@ console.log(properties)
     <!-- Left Panel: Listings -->
     <div class="lg:w-1/2 bg-white lg:mt-0 mt-[50vh] rounded-2xl overflow-hidden">
       <!-- Listing Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 lg:px-0 px-6 gap-6 lg:pt-0 pt-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 lg:px-2 px-6 gap-6 lg:pt-2 pb-2 pt-8">
 
         <template v-for="property in properties" :key="property.id">
-          <div class="rounded-2xl overflow-hidden bg-violet-50">
+          <div
+            class="rounded-2xl overflow-hidden bg-violet-50 transition-all duration-300"
+            :class="[
+              hoverMarker === property.id ? 'shadow-[0_0_0_4px] shadow-violet-300' : ''
+            ]"
+            @mouseenter="onMouseEnterCard(property.id)"
+            @mouseleave="onMouseLeaveCard()"
+          >
             <div class="relative">
               <img :src="property.image_main" :alt="property.title" class="w-full h-48 object-cover">
               <div class="absolute top-2 left-2 text-violet-700 bg-violet-100 px-2 py-1 rounded-full text-xs font-medium">
@@ -61,7 +119,7 @@ console.log(properties)
               <p class="text-sm text-gray-500 mb-2"></p>
               <div class="flex items-center justify-between">
                 <span class="text-sm text-gray-500 font-bold">{{ property.area_total_formatted }}</span>
-                <span class="text-lg font-semibold text-violet-700">{{ property.price }}₽</span>
+                <span class="text-lg font-semibold bg-violet-500 text-violet-50 px-2 rounded-lg">{{ property.price }}₽</span>
               </div>
             </div>
           </div>
@@ -309,12 +367,14 @@ console.log(properties)
 
       <!-- Placeholder for map -->
       <div
-        class="w-full bg-gray-200 flex items-center justify-center lg:rounded-2xl sticky top-24 h-[calc(51vh)] lg:h-[calc(100vh-120px)]"
+        class="w-full bg-gray-200 flex items-center justify-center lg:rounded-2xl sticky top-24 h-[calc(51vh)] lg:h-[calc(100vh-120px)] overflow-hidden"
       >
-        <div class="text-center">
-          <div class="text-gray-500 mb-2">Карта</div>
-          <div class="text-xs text-gray-400">Здесь будет карта с метками цен</div>
-        </div>
+        <YaMapList
+          :markers="markers"
+          @markerMouseEnter="markerMouseEnter"
+          @markerMouseLeave="markerMouseLeave"
+          @markerClick="markerClick"
+        />
       </div>
     </div>
 
