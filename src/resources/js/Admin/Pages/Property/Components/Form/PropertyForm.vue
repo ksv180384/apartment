@@ -95,8 +95,8 @@ const form = reactive({
   street: props.property?.address?.street  || '',
   house_number: props.property?.address?.house_number  || '',
   apartment_number: props.property?.address?.apartment_number  || '',
-  latitude: props.property?.address?.latitude  || '',
-  longitude: props.property?.address?.longitude  || '',
+  latitude: props.property?.address?.latitude ? parseFloat(props.property.address.latitude) : null,
+  longitude: props.property?.address?.longitude ? parseFloat(props.property.address.longitude) : null,
   images: props.property?.images || [],
   sub_data: props.property?.sub_data  || null,
 });
@@ -316,7 +316,7 @@ onMounted(() => {
             placeholder="Вид недвижимости"
             clearable
             filterable
-            :disabled="property?.id"
+            :disabled="!!property?.id"
           >
             <el-option
               v-for="propertyType in propertyTypes"
@@ -422,6 +422,8 @@ onMounted(() => {
 
     <div>
       <ya-map
+        :latitude="form.latitude || null"
+        :longitude="form.longitude || null"
         @selectAddress="onSelectAddress"
         @selectPosition="onSelectPosition"
       />

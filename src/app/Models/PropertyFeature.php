@@ -19,9 +19,7 @@ class PropertyFeature extends Model
         'year_built' => 'integer',
     ];
 
-    protected $appends = [
-        'area_total_formatted',
-    ];
+    protected $appends = [];
 
     /**
      * Объект недвижимости, к которому относятся характеристики
@@ -46,7 +44,7 @@ class PropertyFeature extends Model
     protected function areaTotalFormatted(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->area_total ? number_format($this->area_total, 1, ',', ' ') . ' м²' : null,
+            get: fn () => $this->area_total ? number_format($this->area_total, 0, ',', ' ') . ' м²' : null,
         );
     }
 }

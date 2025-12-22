@@ -34,7 +34,6 @@ const removeImg = () => {
       <el-image
         class="overflow-hidden w-40 rounded-sm relative h-full"
         :src="image"
-        :preview-teleported="image"
         :preview-src-list="[imageFull]"
         :zoom-rate="1.2"
         fit="cover"

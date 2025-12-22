@@ -26,7 +26,7 @@ class PropertyResource extends JsonResource
             'address' => $this->address->fullAddress ?? '',
             'is_published' => $this->is_published,
             'views_count' => $this->views_count,
-            'sub_data' => $this->sub_data,
+            'area_total_formatted' => $this->features->area_total_formatted,
         ];
     }
 }

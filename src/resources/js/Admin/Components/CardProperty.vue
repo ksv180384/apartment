@@ -4,7 +4,7 @@ import {Link} from "@inertiajs/vue3";
 const { property } = defineProps({
   property: { type: Object, required: true }
 });
-console.log(property)
+
 </script>
 
 <template>

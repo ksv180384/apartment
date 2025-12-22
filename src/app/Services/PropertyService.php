@@ -22,6 +22,7 @@ class PropertyService
                 'user:id,email',
                 'address',
                 'media',
+                'features'
             ])
             ->orderBy('created_at')
             ->paginate(self::PAGINATION_LIMIT);
