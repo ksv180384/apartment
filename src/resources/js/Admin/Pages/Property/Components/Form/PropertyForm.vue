@@ -35,6 +35,7 @@ const refInputName = ref();
 
 const propertyTypeActive = ref(null);
 const media = ref(props.property?.media || null);
+const mediaMini = ref(props.property?.media_mini || null);
 
 const subFormComponent = computed(() => {
   if (['novostroiki'].includes(propertyTypeActive.value?.slug)) {
@@ -231,6 +232,7 @@ watch(
   () => props.property?.media,
   (newMedia) => {
     media.value = newMedia;
+    mediaMini.value = props.property?.media_mini;
   }
 )
 
@@ -262,7 +264,8 @@ onMounted(() => {
 
     <UploadImages
       v-model="form.images"
-      :images-uploaded="media"
+      :images-uploaded="mediaMini"
+      :images-uploaded-full="media"
       @removeUploadedImg="removeUploadedImg"
     />
 

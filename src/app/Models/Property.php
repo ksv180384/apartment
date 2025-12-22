@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\ImageUploadService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -159,6 +160,17 @@ class Property extends Model
         return $mainImage ? asset('storage/' . $mainImage->file_path . $mainImage->file_name) : 'https://imgholder.ru/400x250/8493a8/adb9ca&text=IMAGE+HOLDER&font=kelson';
     }
 
+    public function getMainImageUrlMiniAttribute(): ?string
+    {
+        $mainImage = $this->media->where('is_main', true)->first();
+
+        if (!$mainImage) {
+            $mainImage = $this->media->first();
+        }
+
+        return $mainImage ? asset('storage/' . $mainImage->file_path . ImageUploadService::PREFIX_MINI . $mainImage->file_name) : 'https://imgholder.ru/400x250/8493a8/adb9ca&text=IMAGE+HOLDER&font=kelson';
+    }
+
     public function getImageUrlAllAttribute()
     {
         if(!$this->media){
@@ -169,6 +181,22 @@ class Property extends Model
             return (object)[
                 'id' => $item->id,
                 'path' => asset('storage/' . $item->file_path . $item->file_name),
+                'is_main' => $item->is_main,
+                'order' => $item->order,
+            ];
+        });
+    }
+
+    public function getImageUrlAllMiniAttribute()
+    {
+        if(!$this->media){
+            return null;
+        }
+
+        return $this->media->map(function ($item) {
+            return (object)[
+                'id' => $item->id,
+                'path' => asset('storage/' . $item->file_path . ImageUploadService::PREFIX_MINI . $item->file_name),
                 'is_main' => $item->is_main,
                 'order' => $item->order,
             ];
@@ -187,6 +215,24 @@ class Property extends Model
             return [
                 'id' => $item->id,
                 'path' => asset('storage/' . $item->file_path . $item->file_name),
+                'is_main' => $item->is_main,
+                'order' => $item->order,
+            ];
+        });
+    }
+
+    public function getImageUrlMiniAttribute()
+    {
+        if(!$this->media){
+            return null;
+        }
+
+        return $this->media->filter(function ($item) {
+            return !$item->is_main;
+        })->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'path' => asset('storage/' . $item->file_path . ImageUploadService::PREFIX_MINI . $item->file_name),
                 'is_main' => $item->is_main,
                 'order' => $item->order,
             ];

@@ -28,6 +28,7 @@ class PropertyEditResource extends JsonResource
             'area_total' => $this->features?->area_total ?? null,
             'year_built' => $this->features?->year_built ? (string)$this->features->year_built :  null,
             'media' => ImageUrlResource::collection($this->image_url_all),
+            'media_mini' => ImageUrlResource::collection($this->image_url_all_mini),
             'address' => $this->address,
             'sub_data' => $this->sub_data,
         ];

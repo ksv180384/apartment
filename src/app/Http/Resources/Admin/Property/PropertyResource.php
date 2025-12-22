@@ -22,7 +22,7 @@ class PropertyResource extends JsonResource
             'property_type' => $this->propertyType->name ?? '',
             'property_slug' => $this->propertyType->slug ?? '',
             'user' => $this->user->email ?? '',
-            'image_main' => $this->main_image_url ?? '',
+            'image_main' => $this->main_image_url_mini ?? '',
             'address' => $this->address->fullAddress ?? '',
             'is_published' => $this->is_published,
             'views_count' => $this->views_count,

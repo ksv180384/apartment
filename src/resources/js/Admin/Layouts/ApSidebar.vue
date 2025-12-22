@@ -10,7 +10,7 @@ const props = defineProps({
 <template>
   <aside
     :class="[
-      'fixed flex flex-col md:mt-0 top-0 px-5 left-0 bg-white dark:bg-gray-900 dark:border-gray-800 text-gray-900 h-screen transition-all duration-300 ease-in-out z-99999 border-r border-gray-200 [z-index:2]',
+      'fixed flex flex-col md:mt-0 top-0 px-5 left-0 bg-white dark:bg-gray-900 dark:border-gray-800 text-gray-900 h-screen transition-all duration-300 ease-in-out z-2 border-r border-gray-200',
       {
         'md:w-[290px]': !isMobile || isMobileOpen,
         'translate-x-0 w-[290px]': isMobileOpen,

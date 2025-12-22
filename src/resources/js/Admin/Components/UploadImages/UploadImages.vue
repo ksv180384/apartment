@@ -6,6 +6,7 @@ import ImageItem from '@/Admin/Components/UploadImages/ImageItem.vue';
 const model = defineModel();
 const { imagesUploaded } = defineProps({
   imagesUploaded: { type: Array, default: [] },
+  imagesUploadedFull: { type: Array, default: [] },
 });
 const emits = defineEmits(['removeUploadedImg']);
 
@@ -150,13 +151,15 @@ watch(
       <template v-for="(image, index) in images">
         <ImageItem
           :image="image"
+          :image-full="image"
           :index="index"
           @remove="removeImg"
         />
       </template>
-      <template v-for="imageUploaded in imagesUploaded" :key="imageUploaded.id">
+      <template v-for="(imageUploaded, key) in imagesUploaded" :key="imageUploaded.id">
         <ImageItem
           :image="imageUploaded.path"
+          :image-full="imagesUploadedFull[key]?.path"
           :index="imageUploaded.id"
           @remove="removeUploadedImg(imageUploaded.id)"
         />
