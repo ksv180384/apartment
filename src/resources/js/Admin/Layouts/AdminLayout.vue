@@ -52,7 +52,7 @@ onUnmounted(() => {
       :isMobileOpen="isMobileOpen"
     />
     <div
-      class="flex flex-col flex-1 transition-all duration-300 ease-in-out md:ml-[290px]"
+      class="flex flex-col w-full transition-all duration-300 ease-in-out md:ml-[290px]"
     >
       <ApHeader
         :header-title="headerTitle"
@@ -60,7 +60,12 @@ onUnmounted(() => {
         :is-mobile-open="isMobileOpen"
         @toggle-mobile-menu="toggleSidebar"
       />
-      <div class="flex flex-col flex-1 p-3 max-w-(--breakpoint-2xl)">
+      <div
+        class="flex flex-col flex-1 p-3 transition-all duration-300 max-w-(--breakpoint-2xl)"
+        :class="[
+          { 'w-screen ms-[290px]': isMobileOpen }
+        ]"
+      >
         <slot></slot>
       </div>
     </div>
