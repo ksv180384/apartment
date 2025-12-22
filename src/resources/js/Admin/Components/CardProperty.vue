@@ -36,7 +36,7 @@ const { property } = defineProps({
       <div class="flex items-center justify-between">
         <span class="text-sm text-gray-500 line-through"></span>
         <span class="text-lg font-semibold text-red-600">
-          {{ property.price }}₽
+          {{ property.price }}
           <template v-if="property.property_slug === 'ucastki'">
             сотка
           </template>

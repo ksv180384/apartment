@@ -61,7 +61,7 @@ const handleMarkerClick = (markerId) => {
       }"
     >
       <div
-        class="px-2 rounded-r-lg rounded-t-lg shadow-md border border-gray-600 font-semibold transition-all duration-300 cursor-pointer"
+        class="px-2 rounded-r-lg rounded-t-lg shadow-md border border-gray-600 font-semibold transition-all duration-300 cursor-pointer whitespace-nowrap"
         :class="[
           marker.active ? 'bg-violet-500 text-white' : 'bg-white text-gray-700'
         ]
@@ -70,7 +70,7 @@ const handleMarkerClick = (markerId) => {
         @mouseleave="handleMouseLeave(marker.id)"
         @click="handleMarkerClick(marker.id)"
       >
-        {{ marker.price }}₽
+        {{ marker.price }}
       </div>
     </yandex-map-marker>
   </yandex-map>

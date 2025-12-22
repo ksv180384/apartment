@@ -119,7 +119,7 @@ const markerClick = (id) => {
               <p class="text-sm text-gray-500 mb-2"></p>
               <div class="flex items-center justify-between">
                 <span class="text-sm text-gray-500 font-bold">{{ property.area_total_formatted }}</span>
-                <span class="text-lg font-semibold bg-violet-500 text-violet-50 px-2 rounded-lg">{{ property.price }}₽</span>
+                <span class="text-lg font-semibold bg-violet-500 text-violet-50 px-2 rounded-lg">{{ property.price }}</span>
               </div>
             </div>
           </div>
