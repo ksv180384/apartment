@@ -91,7 +91,7 @@ const markerClick = (id) => {
   <main class="container mx-auto lg:px-4 py-6 flex gap-6 pt-19 lg:pt-24 flex-col lg:flex-row">
 
     <!-- Left Panel: Listings -->
-    <div class="lg:w-1/2 bg-white lg:mt-0 mt-[50vh] rounded-2xl overflow-hidden">
+    <div class="lg:w-1/2 bg-white lg:mt-0 mt-[50vh] rounded-2xl overflow-hidden z-[1]">
       <!-- Listing Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 lg:px-2 px-6 gap-6 lg:pt-2 pb-2 pt-8">
 
@@ -363,7 +363,7 @@ const markerClick = (id) => {
     </div>
 
     <!-- Right Panel: Map -->
-    <div class="flex-1 -order-1 lg:order-1 lg:relative fixed w-full lg:z-0 z-[-1]">
+    <div class="flex-1 -order-1 lg:order-1 lg:relative fixed w-full z-[0]">
 
       <!-- Placeholder for map -->
       <div

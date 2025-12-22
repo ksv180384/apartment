@@ -61,7 +61,7 @@ const handleMarkerClick = (markerId) => {
       }"
     >
       <div
-        class="px-2 rounded-r-lg rounded-t-lg shadow-md border border-gray-300 font-semibold transition-all duration-300 cursor-pointer"
+        class="px-2 rounded-r-lg rounded-t-lg shadow-md border border-gray-600 font-semibold transition-all duration-300 cursor-pointer"
         :class="[
           marker.active ? 'bg-violet-500 text-white' : 'bg-white text-gray-700'
         ]
