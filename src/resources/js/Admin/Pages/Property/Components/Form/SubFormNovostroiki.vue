@@ -233,6 +233,8 @@ onMounted(() => {
               v-model="novostroikiForm.completion_date"
               type="date"
               placeholder="Дата сдачи дома"
+              format="DD.MM.YYYY"
+              value-format="YYYY-MM-DD"
               @change="updateParent"
             />
           </el-form-item>
