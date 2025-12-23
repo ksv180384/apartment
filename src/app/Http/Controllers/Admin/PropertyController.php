@@ -101,7 +101,7 @@ class PropertyController extends Controller
 
         DB::beginTransaction();
 
-        try {
+//        try {
             $propertyService->create($request->validated());
 
             DB::commit();
@@ -109,18 +109,18 @@ class PropertyController extends Controller
             return Redirect::route('admin.properties.index')
                 ->with('success', 'Недвижимость успешно создана.');
 
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            \Log::error('Ошибка при создании недвижимости: ' . $e->getMessage(), [
-                'request_data' => $request->validated(),
-                'trace' => $e->getTrace(),
-            ]);
-
-            return Redirect::back()
-                ->with('error', 'Произошла ошибка при создании недвижимости. Пожалуйста, попробуйте снова.')
-                ->withInput();
-        }
+//        } catch (\Exception $e) {
+//            DB::rollBack();
+//
+//            \Log::error('Ошибка при создании недвижимости: ' . $e->getMessage(), [
+//                'request_data' => $request->validated(),
+//                'trace' => $e->getTrace(),
+//            ]);
+//
+//            return Redirect::back()
+//                ->with('error', 'Произошла ошибка при создании недвижимости. Пожалуйста, попробуйте снова.')
+//                ->withInput();
+//        }
     }
 
     public function edit(

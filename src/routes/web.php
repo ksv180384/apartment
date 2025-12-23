@@ -29,6 +29,7 @@ Route::get('/admin/redirect', function (\Illuminate\Http\Request $request) {
 })->name('admin.redirect');
 
 Route::get('properties', [\App\Http\Controllers\App\PropertyController::class, 'index'])->name('properties.index');
+Route::get('properties/{id}', [\App\Http\Controllers\App\PropertyController::class, 'show'])->name('properties.show');
 
 Route::middleware(['auth', 'verified'])->group(function () {
 

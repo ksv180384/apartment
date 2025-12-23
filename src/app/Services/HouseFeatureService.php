@@ -11,7 +11,7 @@ class HouseFeatureService
     public function create(array $houseFeatureData): HouseFeature
     {
         $houseFeature = HouseFeature::query()->create([
-            'property_id' => $garageFeatureData['property_id'] ?? null,
+            'property_id' => $houseFeatureData['property_id'] ?? null,
             'land_area' => $houseFeatureData['land_area'] ?? null,
             'bedrooms_total' => $houseFeatureData['bedrooms_total'] ?? null,
             'wall_material' => $houseFeatureData['wall_material'] ?? null,

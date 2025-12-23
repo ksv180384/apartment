@@ -39,6 +39,8 @@ class HouseFeature extends Model
         'foundation_type', // Тип фундамента
     ];
 
+    public $timestamps = false;
+
     protected $casts = [
         'land_area' => 'decimal:2',
         'bedrooms_total' => 'integer',

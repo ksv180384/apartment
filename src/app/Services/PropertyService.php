@@ -30,9 +30,34 @@ class PropertyService
         return $properties;
     }
 
+    public function propertiesPublishedPagination(): \Illuminate\Pagination\LengthAwarePaginator
+    {
+        $properties = Property::query()
+            ->with([
+                'category:id,name',
+                'propertyType:id,name,slug',
+                'user:id,email',
+                'address',
+                'media',
+                'features'
+            ])
+            ->where('is_published', true)
+            ->orderBy('created_at')
+            ->paginate(self::PAGINATION_LIMIT);
+
+        return $properties;
+    }
+
     public function getById(int $id): Property
     {
         $property = Property::query()->findOrFail($id);
+
+        return $property;
+    }
+
+    public function getPublishedById(int $id): Property
+    {
+        $property = Property::query()->where('is_published', true)->findOrFail($id);
 
         return $property;
     }

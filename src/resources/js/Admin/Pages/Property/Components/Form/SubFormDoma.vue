@@ -83,6 +83,7 @@ onMounted(() => {
           <el-input
             v-model="domaForm.land_area"
             placeholder="Площадь участка в сотках"
+            @input="updateParent"
           />
         </el-form-item>
       </div>
@@ -102,6 +103,7 @@ onMounted(() => {
           <el-input
             v-model="domaForm.wall_material"
             placeholder="Материал стен"
+            @input="updateParent"
           />
         </el-form-item>
       </div>
@@ -113,6 +115,7 @@ onMounted(() => {
           <el-input
             v-model="domaForm.foundation_type"
             placeholder="Тип фундамента"
+            @input="updateParent"
           />
         </el-form-item>
       </div>
@@ -122,6 +125,7 @@ onMounted(() => {
           <el-input
             v-model="domaForm.roof_material"
             placeholder="Материал крыши"
+            @input="updateParent"
           />
         </el-form-item>
       </div>
@@ -160,6 +164,7 @@ onMounted(() => {
           <el-input
             v-model="domaForm.bedrooms_total"
             placeholder="Количество спален"
+            @input="updateParent"
           />
         </el-form-item>
       </div>
@@ -190,17 +195,32 @@ onMounted(() => {
     <div class="flex md:flex-row flex-col gap-4">
       <div class="flex-1">
         <el-form-item prop="has_electricity">
-          <el-switch v-model="domaForm.has_electricity" size="small" active-text="Электричество"/>
+          <el-switch
+            v-model="domaForm.has_electricity"
+            size="small"
+            active-text="Электричество"
+            @change="updateParent"
+          />
         </el-form-item>
       </div>
       <div class="flex-1">
         <el-form-item prop="has_water_supply">
-          <el-switch v-model="domaForm.has_water_supply" size="small" active-text="Водоснабжение"/>
+          <el-switch
+            v-model="domaForm.has_water_supply"
+            size="small"
+            active-text="Водоснабжение"
+            @change="updateParent"
+          />
         </el-form-item>
       </div>
       <div class="flex-1">
         <el-form-item prop="has_sewage">
-          <el-switch v-model="domaForm.has_sewage" size="small" active-text="Канализация"/>
+          <el-switch
+            v-model="domaForm.has_sewage"
+            size="small"
+            active-text="Канализация"
+            @change="updateParent"
+          />
         </el-form-item>
       </div>
     </div>
@@ -208,17 +228,32 @@ onMounted(() => {
     <div class="flex md:flex-row flex-col gap-4">
       <div class="flex-1">
         <el-form-item prop="has_heating">
-          <el-switch v-model="domaForm.has_heating" size="small" active-text="Отопление"/>
+          <el-switch
+            v-model="domaForm.has_heating"
+            size="small"
+            active-text="Отопление"
+            @change="updateParent"
+          />
         </el-form-item>
       </div>
       <div class="flex-1">
         <el-form-item prop="has_gas">
-          <el-switch v-model="domaForm.has_gas" size="small" active-text="Газ"/>
+          <el-switch
+            v-model="domaForm.has_gas"
+            size="small"
+            active-text="Газ"
+            @change="updateParent"
+          />
         </el-form-item>
       </div>
       <div class="flex-1">
         <el-form-item prop="has_parking">
-          <el-switch v-model="domaForm.has_lawn" size="small" active-text="Парковка"/>
+          <el-switch
+            v-model="domaForm.has_lawn"
+            size="small"
+            active-text="Парковка"
+            @change="updateParent"
+          />
         </el-form-item>
       </div>
     </div>
@@ -226,17 +261,32 @@ onMounted(() => {
     <div class="flex md:flex-row flex-col gap-4">
       <div class="flex-1">
         <el-form-item prop="has_internet">
-          <el-switch v-model="domaForm.has_internet" size="small" active-text="Интернет"/>
+          <el-switch
+            v-model="domaForm.has_internet"
+            size="small"
+            active-text="Интернет"
+            @change="updateParent"
+          />
         </el-form-item>
       </div>
       <div class="flex-1">
         <el-form-item prop="has_phone_line">
-          <el-switch v-model="domaForm.has_phone_line" size="small" active-text="Телефонная линия"/>
+          <el-switch
+            v-model="domaForm.has_phone_line"
+            size="small"
+            active-text="Телефонная линия"
+            @change="updateParent"
+          />
         </el-form-item>
       </div>
       <div class="flex-1">
         <el-form-item prop="has_garage">
-          <el-switch v-model="domaForm.has_garage" size="small" active-text="Гараж"/>
+          <el-switch
+            v-model="domaForm.has_garage"
+            size="small"
+            active-text="Гараж"
+            @change="updateParent"
+          />
         </el-form-item>
       </div>
     </div>
@@ -244,17 +294,32 @@ onMounted(() => {
     <div class="flex md:flex-row flex-col gap-4">
       <div class="flex-1">
         <el-form-item prop="has_basement">
-          <el-switch v-model="domaForm.has_basement" size="small" active-text="Подвал"/>
+          <el-switch
+            v-model="domaForm.has_basement"
+            size="small"
+            active-text="Подвал"
+            @change="updateParent"
+          />
         </el-form-item>
       </div>
       <div class="flex-1">
         <el-form-item prop="has_attic">
-          <el-switch v-model="domaForm.has_attic" size="small" active-text="Чердак/мансарда"/>
+          <el-switch
+            v-model="domaForm.has_attic"
+            size="small"
+            active-text="Чердак/мансарда"
+            @change="updateParent"
+          />
         </el-form-item>
       </div>
       <div class="flex-1">
         <el-form-item prop="has_balcony">
-          <el-switch v-model="domaForm.has_balcony" size="small" active-text="Балкон"/>
+          <el-switch
+            v-model="domaForm.has_balcony"
+            size="small"
+            active-text="Балкон"
+            @change="updateParent"
+          />
         </el-form-item>
       </div>
     </div>
@@ -262,17 +327,32 @@ onMounted(() => {
     <div class="flex md:flex-row flex-col gap-4">
       <div class="flex-1">
         <el-form-item prop="has_terrace">
-          <el-switch v-model="domaForm.has_terrace" size="small" active-text="Терраса"/>
+          <el-switch
+            v-model="domaForm.has_terrace"
+            size="small"
+            active-text="Терраса"
+            @change="updateParent"
+          />
         </el-form-item>
       </div>
       <div class="flex-1">
         <el-form-item prop="has_veranda">
-          <el-switch v-model="domaForm.has_veranda" size="small" active-text="Веранда"/>
+          <el-switch
+            v-model="domaForm.has_veranda"
+            size="small"
+            active-text="Веранда"
+            @change="updateParent"
+          />
         </el-form-item>
       </div>
       <div class="flex-1">
         <el-form-item prop="has_pool">
-          <el-switch v-model="domaForm.has_pool" size="small" active-text="Бассейн"/>
+          <el-switch
+            v-model="domaForm.has_pool"
+            size="small"
+            active-text="Бассейн"
+            @change="updateParent"
+          />
         </el-form-item>
       </div>
     </div>
@@ -280,17 +360,32 @@ onMounted(() => {
     <div class="flex md:flex-row flex-col gap-4">
       <div class="flex-1">
         <el-form-item prop="has_sauna">
-          <el-switch v-model="domaForm.has_sauna" size="small" active-text="Сауна/баня"/>
+          <el-switch
+            v-model="domaForm.has_sauna"
+            size="small"
+            active-text="Сауна/баня"
+            @change="updateParent"
+          />
         </el-form-item>
       </div>
       <div class="flex-1">
         <el-form-item prop="has_fireplace">
-          <el-switch v-model="domaForm.has_fireplace" size="small" active-text="Камин"/>
+          <el-switch
+            v-model="domaForm.has_fireplace"
+            size="small"
+            active-text="Камин"
+            @change="updateParent"
+          />
         </el-form-item>
       </div>
       <div class="flex-1">
         <el-form-item prop="has_fence">
-          <el-switch v-model="domaForm.has_fence" size="small" active-text="Ограждение"/>
+          <el-switch
+            v-model="domaForm.has_fence"
+            size="small"
+            active-text="Ограждение"
+            @change="updateParent"
+          />
         </el-form-item>
       </div>
     </div>
@@ -298,17 +393,32 @@ onMounted(() => {
     <div class="flex md:flex-row flex-col gap-4">
       <div class="flex-1">
         <el-form-item prop="has_garden">
-          <el-switch v-model="domaForm.has_garden" size="small" active-text="Сад"/>
+          <el-switch
+            v-model="domaForm.has_garden"
+            size="small"
+            active-text="Сад"
+            @change="updateParent"
+          />
         </el-form-item>
       </div>
       <div class="flex-1">
         <el-form-item prop="has_vegetable_garden">
-          <el-switch v-model="domaForm.has_vegetable_garden" size="small" active-text="Огород"/>
+          <el-switch
+            v-model="domaForm.has_vegetable_garden"
+            size="small"
+            active-text="Огород"
+            @change="updateParent"
+          />
         </el-form-item>
       </div>
       <div class="flex-1">
         <el-form-item prop="has_lawn">
-          <el-switch v-model="domaForm.has_lawn" size="small" active-text="Газон"/>
+          <el-switch
+            v-model="domaForm.has_lawn"
+            size="small"
+            active-text="Газон"
+            @change="updateParent"
+          />
         </el-form-item>
       </div>
     </div>
@@ -316,7 +426,12 @@ onMounted(() => {
     <div class="flex md:flex-row flex-col gap-4">
       <div class="flex-1">
         <el-form-item prop="has_playground">
-          <el-switch v-model="domaForm.has_playground" size="small" active-text="Детская площадка"/>
+          <el-switch
+            v-model="domaForm.has_playground"
+            size="small"
+            active-text="Детская площадка"
+            @change="updateParent"
+          />
         </el-form-item>
       </div>
     </div>
