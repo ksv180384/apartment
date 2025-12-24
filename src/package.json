@@ -23,6 +23,7 @@
     },
     "dependencies": {
         "element-plus": "^2.11.2",
+        "fslightbox-vue": "^3.0.2",
         "vue-yandex-maps": "^2.2.3"
     }
 }

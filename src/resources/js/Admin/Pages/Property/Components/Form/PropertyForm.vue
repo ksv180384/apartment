@@ -6,7 +6,7 @@ import YaMap from '@/Admin/Pages/Property/Components/Form/YaMap.vue';
 import SubFormNovostroiki from '@/Admin/Pages/Property/Components/Form/SubFormNovostroiki.vue';
 import SubFormKvartiry from '@/Admin/Pages/Property/Components/Form/SubFormKvartiry.vue';
 import SubFormDoma from '@/Admin/Pages/Property/Components/Form/SubFormDoma.vue';
-import SubFormUcastki from '@/Admin/Pages/Property/Components/Form/SubFormUcastki.vue';
+import SubFormUchastki from '@/Admin/Pages/Property/Components/Form/SubFormUchastki.vue';
 import SubFormKommerceskaiaNedvizimost from '@/Admin/Pages/Property/Components/Form/SubFormKommerceskaiaNedvizimost.vue';
 import SubFormGarazi from '@/Admin/Pages/Property/Components/Form/SubFormGarazi.vue';
 import UploadImages from '@/Admin/Components/UploadImages/UploadImages.vue';
@@ -47,8 +47,8 @@ const subFormComponent = computed(() => {
   else if(propertyTypeActive.value?.slug === 'doma'){
     return SubFormDoma;
   }
-  else if(propertyTypeActive.value?.slug === 'ucastki'){
-    return SubFormUcastki;
+  else if(propertyTypeActive.value?.slug === 'uchastki'){
+    return SubFormUchastki;
   }
   else if(propertyTypeActive.value?.slug === 'kommerceskaia-nedvizimost'){
     return SubFormKommerceskaiaNedvizimost;

@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 class LandFeature extends Model
 {
     protected $fillable = [
-        'property_id ',
+        'property_id',
         'land_area', // Площадь участка
         'land_category', // Категория земли: 'ИЖС', 'СНТ', 'ЛПХ', 'коммерческая'
         'permitted_use', // Разрешенное использование

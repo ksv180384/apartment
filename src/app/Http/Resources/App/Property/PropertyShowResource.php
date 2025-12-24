@@ -18,14 +18,18 @@ class PropertyShowResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'main_image_url' => $this->main_image_url,
             'description' => $this->description,
-            'price' => $this->price,
-            'category' => $this->category,
+            'price' => $this->formatted_price,
+            'category' => PropertyShowCategoryResource::make($this->category),
             'property_type' => $this->property_type,
-            'features' => $this->features,
+            'features' => PropertyShowFeatureResource::make($this->features),
             'media' => ImageUrlResource::collection($this->image_url_all),
-            'media_mini' => ImageUrlResource::collection($this->image_url_all_mini),
+            'media_mini' => ImageUrlResource::collection($this->image_url_mini),
             'address' => $this->address,
+            'coordinates' => $this->address?->latitude && $this->address?->longitude
+                ? [$this->address->latitude, $this->address->longitude]
+                : null,
             'sub_data' => $this->sub_data,
         ];
     }

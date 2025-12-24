@@ -212,7 +212,7 @@ class Property extends Model
         return $this->media->filter(function ($item) {
             return !$item->is_main;
         })->map(function ($item) {
-            return [
+            return (object)[
                 'id' => $item->id,
                 'path' => asset('storage/' . $item->file_path . $item->file_name),
                 'is_main' => $item->is_main,
@@ -230,7 +230,7 @@ class Property extends Model
         return $this->media->filter(function ($item) {
             return !$item->is_main;
         })->map(function ($item) {
-            return [
+            return (object)[
                 'id' => $item->id,
                 'path' => asset('storage/' . $item->file_path . ImageUploadService::PREFIX_MINI . $item->file_name),
                 'is_main' => $item->is_main,

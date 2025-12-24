@@ -54,7 +54,7 @@ class Address extends Model
                     $this->region,
                     $this->city,
                     $this->district,
-                    'ул. ' . $this->street,
+                    $this->street,
                     'д. ' . $this->house_number
                 ];
 
@@ -76,7 +76,7 @@ class Address extends Model
             get: function () {
                 $parts = [
                     $this->city,
-                    'ул. ' . $this->street,
+                    $this->street,
                     'д. ' . $this->house_number
                 ];
 
