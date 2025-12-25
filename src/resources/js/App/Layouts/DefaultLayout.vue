@@ -1,6 +1,7 @@
 <script setup>
 
 import AppHeader from '@/App/Components/AppHeader.vue';
+import AppFooter from '@/App/Components/AppFooter.vue';
 </script>
 
 <template>
@@ -14,11 +15,7 @@ import AppHeader from '@/App/Components/AppHeader.vue';
   </main>
 
   <!-- Footer -->
-  <footer class="bg-white border-t mt-8 py-6">
-    <div class="container mx-auto px-4 text-center text-sm text-gray-600">
-      <p>© 2025 Airbnb, Inc. Условия • Конфиденциальность • Карта сайта</p>
-    </div>
-  </footer>
+  <AppFooter/>
 </div>
 </template>
 
