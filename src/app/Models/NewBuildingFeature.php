@@ -55,6 +55,21 @@ class NewBuildingFeature extends Model
         return $this->belongsTo(Property::class);
     }
 
+    public function buildingClass(): BelongsTo
+    {
+        return $this->belongsTo(BuildingClass::class);
+    }
+
+    public function buildingType(): BelongsTo
+    {
+        return $this->belongsTo(BuildingType::class);
+    }
+
+    public function finishingType(): BelongsTo
+    {
+        return $this->belongsTo(FinishingType::class);
+    }
+
     /**
      * Accessors & Mutators
      */
@@ -173,6 +188,6 @@ class NewBuildingFeature extends Model
      */
     public function getCeilingHeightFormattedAttribute(): ?string
     {
-        return $this->ceiling_height ? number_format($this->ceiling_height, 2, ',', ' ') . ' м' : null;
+        return $this->ceiling_height ? number_format($this->ceiling_height / 100, 2, ',', ' ') . ' м' : null;
     }
 }

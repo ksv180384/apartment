@@ -3,6 +3,7 @@
 namespace App\Http\Resources\App\Property;
 
 use App\Http\Resources\App\Media\ImageUrlResource;
+use App\Services\PropertyService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -22,7 +23,7 @@ class PropertyShowResource extends JsonResource
             'description' => $this->description,
             'price' => $this->formatted_price,
             'category' => PropertyShowCategoryResource::make($this->category),
-            'property_type' => $this->property_type,
+            'property_type' => PropertyShowPropertyTypeResource::make($this->propertyType),
             'features' => PropertyShowFeatureResource::make($this->features),
             'media' => ImageUrlResource::collection($this->image_url_all),
             'media_mini' => ImageUrlResource::collection($this->image_url_mini),
@@ -30,7 +31,7 @@ class PropertyShowResource extends JsonResource
             'coordinates' => $this->address?->latitude && $this->address?->longitude
                 ? [$this->address->latitude, $this->address->longitude]
                 : null,
-            'sub_data' => $this->sub_data,
+            'sub_data' => PropertyService::subDataResource($this->propertyType->slug, $this->sub_data),
         ];
     }
 }

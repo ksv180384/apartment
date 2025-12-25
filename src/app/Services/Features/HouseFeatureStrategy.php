@@ -15,7 +15,7 @@ class HouseFeatureStrategy implements FeatureStrategyInterface
 
     public function update(Property $property, array $subData): void
     {
-        $feature = $property->houseFeature;
+        $feature = $property->houseFeatures;
 
         if ($feature) {
             (new HouseFeatureService())->update($feature->id, $subData);

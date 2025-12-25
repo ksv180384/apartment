@@ -11,9 +11,14 @@ class HouseFeature extends Model
     protected $fillable = [
         'property_id',
         'land_area', // Площадь участка в сотках
+        'building_floors', // Этажность дома
         'bedrooms_total', // Количество спален
         'wall_material', // Материал стен
         'roof_material', // Материал крыши
+        'finishing_type_id', // Тип отделки
+        'area_living', // Жилая площадь в м²
+        'bathrooms_total', // Количество санузлов
+        'ceiling_height', // Высота потолков (мм)
         'has_electricity', // Электричество
         'has_water_supply', // Водоснабжение
         'has_sewage',  // Канализация
@@ -72,5 +77,18 @@ class HouseFeature extends Model
     public function property(): BelongsTo
     {
         return $this->belongsTo(Property::class);
+    }
+
+    public function finishingType(): BelongsTo
+    {
+        return $this->belongsTo(FinishingType::class);
+    }
+
+    /**
+     * Высота потолков с единицами измерения
+     */
+    public function getCeilingHeightFormattedAttribute(): ?string
+    {
+        return $this->ceiling_height ? number_format($this->ceiling_height / 100, 2, ',', ' ') . ' м' : null;
     }
 }

@@ -218,10 +218,10 @@ onMounted(() => {
       <div class="flex md:flex-row flex-col gap-4">
 
         <div class="flex-1">
-          <el-form-item label="Высота потолков" label-position="top" prop="ceiling_height" :error="errors?.ceiling_height || null">
+          <el-form-item label="Высота потолков (мм)" label-position="top" prop="ceiling_height" :error="errors?.ceiling_height || null">
             <el-input
               v-model="novostroikiForm.ceiling_height"
-              placeholder="Высота потолков"
+              placeholder="Высота потолков (мм)"
               @change="updateParent"
             />
           </el-form-item>

@@ -13,21 +13,21 @@ class CommercialFeature extends Model
         'property_id',
         'commercial_type_id', //Тип: 'офис', 'магазин', 'склад', 'ресторан'
         'purpose_id',// Назначение: 'розничная торговля', 'офисы', 'производство'
+        'layout_type_id', // Планировка: 'open space', 'кабинеты'
         'has_ventilation', // Вентиляция
         'has_air_conditioning', // Кондиционирование
         'has_security', // Охрана
         'has_parking', // Парковка
         'parking_spaces', // Количество парковочных мест
-        'layout_type', // Планировка: 'open space', 'кабинеты'
 //        'condition', // Состояние: 'Отличное', 'Хорошее', 'Удовлетворительное', ...
     ];
 
     protected $casts = [
+        'parking_spaces' => 'integer',
         'has_ventilation' => 'boolean',
         'has_air_conditioning' => 'boolean',
         'has_security' => 'boolean',
         'has_parking' => 'boolean',
-        'parking_spaces' => 'integer',
         'has_loading_dock' => 'boolean',
     ];
 
@@ -37,6 +37,27 @@ class CommercialFeature extends Model
     public function property(): BelongsTo
     {
         return $this->belongsTo(Property::class);
+    }
+
+    /**
+     * Тип коммерческой недвижимости
+     */
+    public function commercialType(): BelongsTo
+    {
+        return $this->belongsTo(CommercialType::class);
+    }
+
+    /**
+     * Назначение
+     */
+    public function purpose(): BelongsTo
+    {
+        return $this->belongsTo(Purpose::class);
+    }
+
+    public function layoutType(): BelongsTo
+    {
+        return $this->belongsTo(LayoutType::class);
     }
 
     /**

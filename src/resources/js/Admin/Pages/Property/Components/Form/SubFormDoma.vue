@@ -16,13 +16,11 @@ const domaForm = reactive({
   wall_material: '',
   roof_material: '',
   foundation_type: '',
-
   building_floors: '',
   finishing_type_id: '',
   area_living: '',
   bathrooms_total: '',
   ceiling_height: '',
-
   has_electricity: false,
   has_water_supply: false,
   has_sewage: false,
@@ -32,6 +30,7 @@ const domaForm = reactive({
   has_internet: false,
   has_phone_line: false,
   has_garage: false,
+  has_parking: false,
   has_basement: false,
   has_attic: false,
   has_balcony: false,
@@ -182,10 +181,10 @@ onMounted(() => {
       </div>
 
       <div class="flex-1">
-        <el-form-item label="Высота потолков" label-position="top" prop="ceiling_height" :error="errors?.ceiling_height || null">
+        <el-form-item label="Высота потолков (мм)" label-position="top" prop="ceiling_height" :error="errors?.ceiling_height || null">
           <el-input
             v-model="domaForm.ceiling_height"
-            placeholder="Высота потолков"
+            placeholder="Высота потолков (мм)"
             @change="updateParent"
           />
         </el-form-item>
@@ -249,7 +248,7 @@ onMounted(() => {
       <div class="flex-1">
         <el-form-item prop="has_parking">
           <el-switch
-            v-model="domaForm.has_lawn"
+            v-model="domaForm.has_parking"
             size="small"
             active-text="Парковка"
             @change="updateParent"

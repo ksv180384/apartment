@@ -101,6 +101,14 @@ class Property extends Model
     }
 
     /**
+     * Характеристики домов (если применимо)
+     */
+    public function houseFeatures(): HasOne
+    {
+        return $this->hasOne(HouseFeature::class);
+    }
+
+    /**
      * Характеристики земельных участков (если применимо)
      */
     public function landFeatures(): HasOne
@@ -327,7 +335,6 @@ class Property extends Model
         return self::published()
             ->where('id', '!=', $this->id)
             ->where('property_type_id', $this->property_type_id)
-            ->where('transaction_type_id', $this->transaction_type_id)
             ->whereBetween('price', [$this->price * 0.7, $this->price * 1.3])
             ->with(['features', 'address', 'media'])
             ->orderBy('created_at', 'desc')

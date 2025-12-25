@@ -2,6 +2,11 @@
 
 namespace App\Services;
 
+use App\Http\Resources\App\NewBuildingFeature\CommercialFeatureResource;
+use App\Http\Resources\App\NewBuildingFeature\GarageFeatureResource;
+use App\Http\Resources\App\NewBuildingFeature\HouseFeatureResource;
+use App\Http\Resources\App\NewBuildingFeature\LandFeatureResource;
+use App\Http\Resources\App\NewBuildingFeature\NewBuildingFeatureResource;
 use App\Models\Condition;
 use App\Models\Media;
 use App\Models\Property;
@@ -214,5 +219,17 @@ class PropertyService
 
         // Массовая вставка для оптимизации
         Media::insert($imagesToInsert);
+    }
+
+    public static function subDataResource(string $propertyTypeSlug, $subData)
+    {
+        return match($propertyTypeSlug) {
+            'novostroiki', 'kvartiry', 'komnaty' => NewBuildingFeatureResource::make($subData),
+            'doma' => HouseFeatureResource::make($subData),
+            'uchastki' => LandFeatureResource::make($subData),
+            'kommerceskaia-nedvizimost' => CommercialFeatureResource::make($subData),
+            'garazi' => GarageFeatureResource::make($subData),
+            default => null,
+        };
     }
 }

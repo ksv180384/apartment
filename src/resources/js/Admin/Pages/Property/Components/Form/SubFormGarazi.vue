@@ -100,19 +100,19 @@ onMounted(() => {
 
       <div class="flex md:flex-row flex-col gap-4">
         <div class="flex-1">
-          <el-form-item label="Высота ворот" label-position="top" prop="gate_height" :error="errors?.gate_height || null">
+          <el-form-item label="Высота ворот (мм)" label-position="top" prop="gate_height" :error="errors?.gate_height || null">
             <el-input
               v-model="garaziForm.gate_height"
-              placeholder="Высота ворот"
+              placeholder="Высота ворот (мм)"
               @input="updateParent"
             />
           </el-form-item>
         </div>
         <div class="flex-1">
-          <el-form-item label="Ширина ворот" label-position="top" prop="gate_width" :error="errors?.gate_width || null">
+          <el-form-item label="Ширина ворот (мм)" label-position="top" prop="gate_width" :error="errors?.gate_width || null">
             <el-input
               v-model="garaziForm.gate_width"
-              placeholder="Ширина ворот"
+              placeholder="Ширина ворот (мм)"
             />
           </el-form-item>
         </div>

@@ -43,6 +43,16 @@ class GarageFeature extends Model
         return $this->belongsTo(Property::class);
     }
 
+    public function garageType(): BelongsTo
+    {
+        return $this->belongsTo(GarageType::class);
+    }
+
+    public function ownershipType(): BelongsTo
+    {
+        return $this->belongsTo(OwnershipType::class);
+    }
+
     /**
      * Тип гаража
      */
@@ -71,19 +81,43 @@ class GarageFeature extends Model
     /**
      * Тип собственности
      */
-    protected function ownershipTypeLabel(): Attribute
+//    protected function ownershipTypeLabel(): Attribute
+//    {
+//        return Attribute::make(
+//            get: function () {
+//                return match($this->ownership_type) {
+//                    'ownership' => 'Собственность',
+//                    'lease' => 'Аренда',
+//                    'cooperative_share' => 'Пай в кооперативе',
+//                    'state' => 'Государственная',
+//                    'municipal' => 'Муниципальная',
+//                    'right_of_use' => 'Право пользования',
+//                    default => 'Не указано'
+//                };
+//            },
+//        );
+//    }
+
+    protected function gateHeightFormatted(): Attribute
     {
         return Attribute::make(
             get: function () {
-                return match($this->ownership_type) {
-                    'ownership' => 'Собственность',
-                    'lease' => 'Аренда',
-                    'cooperative_share' => 'Пай в кооперативе',
-                    'state' => 'Государственная',
-                    'municipal' => 'Муниципальная',
-                    'right_of_use' => 'Право пользования',
-                    default => 'Не указано'
-                };
+                if (!$this->gate_height) {
+                    return null;
+                }
+                return number_format($this->gate_height / 100, 2, ',', ' ') . ' м';
+            },
+        );
+    }
+
+    protected function gateWidthFormatted(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                if (!$this->gate_width) {
+                    return null;
+                }
+                return number_format($this->gate_width / 100, 2, ',', ' ') . ' м';
             },
         );
     }

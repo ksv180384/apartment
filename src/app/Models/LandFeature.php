@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
+// Участки
 class LandFeature extends Model
 {
     protected $fillable = [
@@ -13,9 +14,9 @@ class LandFeature extends Model
         'land_area', // Площадь участка
         'land_category', // Категория земли: 'ИЖС', 'СНТ', 'ЛПХ', 'коммерческая'
         'permitted_use', // Разрешенное использование
-        'has_utilities', // Коммуникации
         'relief', // Рельеф: 'ровный', 'холмистый'
         'soil_type', // Тип почвы
+        'has_utilities', // Коммуникации
         'has_road_access', // Подъездные пути
         'has_fence', // Ограждение
     ];

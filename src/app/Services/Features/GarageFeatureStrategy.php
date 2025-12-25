@@ -15,7 +15,7 @@ class GarageFeatureStrategy implements FeatureStrategyInterface
 
     public function update(Property $property, array $subData): void
     {
-        $feature = $property->garageFeature;
+        $feature = $property->garageFeatures;
 
         if ($feature) {
             (new GarageFeatureService())->update($feature->id, $subData);

@@ -15,7 +15,7 @@ class CommercialFeatureStrategy implements FeatureStrategyInterface
 
     public function update(Property $property, array $subData): void
     {
-        $feature = $property->commercialFeature;
+        $feature = $property->commercialFeatures;
 
         if ($feature) {
             (new CommercialFeatureService())->update($feature->id, $subData);
