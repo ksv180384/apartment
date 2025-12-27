@@ -1,70 +1,43 @@
 <script setup>
-import { ref, reactive } from 'vue';
+import { watch } from 'vue';
+import { usePropertyMap } from '@/App/Composables/usePropertyMap';
 
 import YaMapList from '@/App/Components/YaMapList.vue';
 import DefaultLayout from '@/App/Layouts/DefaultLayout.vue';
 import PropertyCard from '@/App/Pages/Property/Components/PropertyCard.vue';
 import AppFilter from "@/App/Components/AppFilter.vue";
 
-const { properties, pagination } = defineProps({
+
+const { propertyTypes, properties, pagination } = defineProps({
+  propertyTypes: { type: Array, default: [] },
   properties: { type: Object, required: true },
   pagination: { type: Object, required: true },
 });
 
-const hoverMarker = ref(0);
-const markers = ref(properties.map(item => {
-  return {
-    id: item.id,
-    coordinates: item.coordinates,
-    price: item.price,
-    active: false,
-  }
-}));
+const {
+  hoverMarker,
+  markers,
+  onMouseEnterCard,
+  onMouseLeaveCard,
+  markerMouseEnter,
+  markerMouseLeave,
+  markerClick,
+  updateMarkers
+} = usePropertyMap(properties);
 
-const onMouseEnterCard = (id) => {
-  markers.value = markers.value.map(item => {
-    if(item.id === id){
-      item.active = true;
-    }
-    return item;
-  });
-}
-
-const onMouseLeaveCard = () => {
-  markers.value = markers.value.map(item => {
-    item.active = false;
-    return item;
-  });
-}
-
-const markerMouseEnter = (id) => {
-  markers.value = markers.value.map(item => {
-    if(item.id === id){
-      item.hover = true;
-    }
-    return item;
-  });
-  hoverMarker.value = id;
-}
-
-const markerMouseLeave = (id) => {
-  markers.value = markers.value.map(item => {
-    item.hover = false;
-    return item;
-  });
-  hoverMarker.value = 0;
-}
-
-const markerClick = (id) => {
-
-}
-
+watch(
+  () => properties,
+  (newVal) => {
+    updateMarkers(newVal);
+  },
+  { deep: true }
+);
 </script>
 
 <template>
   <default-layout>
     <template #headerRight>
-      <AppFilter/>
+      <AppFilter :property-types="propertyTypes"/>
     </template>
 
     <!-- Left Panel: Listings -->

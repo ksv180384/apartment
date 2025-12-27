@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Filters\App\PropertyFilter;
 use App\Http\Resources\App\NewBuildingFeature\CommercialFeatureResource;
 use App\Http\Resources\App\NewBuildingFeature\GarageFeatureResource;
 use App\Http\Resources\App\NewBuildingFeature\HouseFeatureResource;
@@ -46,6 +47,48 @@ class PropertyService
                 'media',
                 'features'
             ])
+            ->where('is_published', true)
+            ->orderBy('created_at')
+            ->paginate(self::PAGINATION_LIMIT);
+
+        return $properties;
+    }
+
+    public function rentsPublishedPagination(): \Illuminate\Pagination\LengthAwarePaginator
+    {
+        $filters = new PropertyFilter();
+        $properties = Property::query()
+            ->with([
+                'category:id,name',
+                'propertyType:id,name,slug',
+                'user:id,email',
+                'address',
+                'media',
+                'features'
+            ])
+            ->rent()
+            ->filter($filters)
+            ->where('is_published', true)
+            ->orderBy('created_at')
+            ->paginate(self::PAGINATION_LIMIT);
+
+        return $properties;
+    }
+
+    public function salesPublishedPagination(): \Illuminate\Pagination\LengthAwarePaginator
+    {
+        $filters = new PropertyFilter();
+        $properties = Property::query()
+            ->with([
+                'category:id,name',
+                'propertyType:id,name,slug',
+                'user:id,email',
+                'address',
+                'media',
+                'features'
+            ])
+            ->sale()
+            ->filter($filters)
             ->where('is_published', true)
             ->orderBy('created_at')
             ->paginate(self::PAGINATION_LIMIT);

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Services\ImageUploadService;
+use App\Traits\Filterable;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -11,6 +13,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Property extends Model
 {
+    use Filterable;
+
     protected $fillable = [
         'title',
         'description',
@@ -114,6 +118,23 @@ class Property extends Model
     public function landFeatures(): HasOne
     {
         return $this->hasOne(LandFeature::class);
+    }
+
+    /**
+     * Scope
+     */
+    #[Scope]
+    public function rent(Builder $query): void
+    {
+        $category = Category::query()->where('slug', 'frenda')->first();
+        $query->where('category_id', $category->id);
+    }
+
+    #[Scope]
+    public function sale(Builder $query): void
+    {
+        $category = Category::query()->where('slug', 'prodaza')->first();
+        $query->where('category_id', $category->id);
     }
 
     /**

@@ -31,6 +31,9 @@ Route::get('/admin/redirect', function (\Illuminate\Http\Request $request) {
 Route::get('properties', [\App\Http\Controllers\App\PropertyController::class, 'index'])->name('properties.index');
 Route::get('properties/{id}', [\App\Http\Controllers\App\PropertyController::class, 'show'])->name('properties.show');
 
+Route::get('rents', [\App\Http\Controllers\App\RentController::class, 'index'])->name('rents.index');
+Route::get('sales', [\App\Http\Controllers\App\SaleController::class, 'index'])->name('sales.index');
+
 Route::middleware(['auth', 'verified'])->group(function () {
 
     // Home

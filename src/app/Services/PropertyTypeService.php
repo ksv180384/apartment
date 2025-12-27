@@ -29,6 +29,17 @@ class PropertyTypeService
         return $categories;
     }
 
+    public function PropertyTypesActiveList(): Collection
+    {
+        $categories = PropertyType::query()
+            ->where('is_active', true)
+            ->orderBy('order')
+            ->orderBy('name')
+            ->get(['id', 'name', 'slug']);
+
+        return $categories;
+    }
+
     public function create(array $categoryData): PropertyType
     {
         $category = PropertyType::query()->create($categoryData);
