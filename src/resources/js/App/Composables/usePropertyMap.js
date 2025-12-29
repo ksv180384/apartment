@@ -68,7 +68,7 @@ export function usePropertyMap(initialProperties) {
         active: false,
         hover: false
       }));
-      console.log('Properties updated, markers refreshed:', newProperties);
+      // console.log('Properties updated, markers refreshed:', newProperties);
     },
     { deep: true, immediate: true }
   );

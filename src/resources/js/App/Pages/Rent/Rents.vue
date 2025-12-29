@@ -7,7 +7,6 @@ import DefaultLayout from '@/App/Layouts/DefaultLayout.vue';
 import PropertyCard from '@/App/Pages/Property/Components/PropertyCard.vue';
 import AppFilter from "@/App/Components/AppFilter.vue";
 
-
 const { propertyTypes, properties, pagination } = defineProps({
   propertyTypes: { type: Array, default: [] },
   properties: { type: Object, required: true },

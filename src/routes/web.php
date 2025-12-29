@@ -5,14 +5,17 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-})->name('home');
+//Route::get('/', function () {
+//    return Inertia::render('Welcome', [
+//        'canLogin' => Route::has('login'),
+//        'canRegister' => Route::has('register'),
+//        'laravelVersion' => Application::VERSION,
+//        'phpVersion' => PHP_VERSION,
+//    ]);
+//})->name('home');
+
+Route::get('/', [\App\Http\Controllers\App\HomeController::class, 'index'])->name('home');
+
 
 Route::get('/redirect', function (\Illuminate\Http\Request $request) {
     $redirectUrl = $request->session()->get('redirect', '');
@@ -33,6 +36,7 @@ Route::get('properties/{id}', [\App\Http\Controllers\App\PropertyController::cla
 
 Route::get('rents', [\App\Http\Controllers\App\RentController::class, 'index'])->name('rents.index');
 Route::get('sales', [\App\Http\Controllers\App\SaleController::class, 'index'])->name('sales.index');
+Route::get('contacts', [\App\Http\Controllers\App\ContactsController::class, 'index'])->name('contacts.index');
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
