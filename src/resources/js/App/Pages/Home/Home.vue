@@ -58,8 +58,11 @@ import DefaultLayout from '@/App/Layouts/DefaultLayout.vue';
             </div>
 
             <div class="text-center p-6 bg-violet-50 rounded-xl">
-              <div class="w-16 h-16 bg-yellow-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-users text-2xl text-yellow-700"></i>
+              <div class="w-16 h-16  rounded-full flex items-center justify-center mx-auto mb-4">
+                <img src="/images/immersive-vr_11739740.png"
+                     alt="Индивидуальный подход"
+                     class="w-full h-full object-cover"
+                />
               </div>
               <h3 class="text-xl font-bold text-gray-800 mb-2">Индивидуальный подход</h3>
               <p class="text-gray-600">Каждому клиенту - персональный менеджер и оптимальные решения</p>

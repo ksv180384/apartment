@@ -9,8 +9,9 @@ import {
   YandexMapMarker
 } from 'vue-yandex-maps';
 
-const { coordinates } = defineProps({
-  coordinates: { type: Array, required: true }
+const { coordinates, height } = defineProps({
+  coordinates: { type: Array, required: true },
+  height: { type: String, default: '400px' },
 });
 
 const mapWidth = ref('100%');
@@ -34,7 +35,7 @@ const settings = reactive({
     v-model="map"
     :settings="settings"
     :width="mapWidth"
-    height="400px"
+    :height="height"
   >
     <yandex-map-default-scheme-layer/>
     <yandex-map-default-features-layer/>
