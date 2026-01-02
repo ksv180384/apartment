@@ -96,6 +96,24 @@ class PropertyService
         return $properties;
     }
 
+    public function lastProperties(int $count = 3)
+    {
+        $properties = Property::query()
+            ->with([
+                'category:id,name',
+                'propertyType:id,name,slug',
+                'user:id,email',
+                'address',
+                'media',
+                'features'
+            ])
+            ->take($count)
+            ->orderByDesc('updated_at')
+            ->get();
+
+        return $properties;
+    }
+
     public function getById(int $id): Property
     {
         $property = Property::query()->findOrFail($id);

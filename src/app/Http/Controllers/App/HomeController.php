@@ -13,9 +13,13 @@ use Inertia\Inertia;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(PropertyService $propertyService)
     {
 
-        return Inertia::render('Home/Home', []);
+        $lastProperties = $propertyService->lastProperties(4);
+
+        return Inertia::render('Home/Home', [
+            'lastProperties' => PropertyResource::collection($lastProperties),
+        ]);
     }
 }
