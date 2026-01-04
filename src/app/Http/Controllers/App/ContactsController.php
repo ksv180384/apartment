@@ -16,6 +16,13 @@ class ContactsController extends Controller
     public function index()
     {
 
-        return Inertia::render('Contact/Contact', []);
+        return Inertia::render('Contact/Contact', [
+            'seo' => [
+                'title' => 'Контакты агентства недвижимости Триумф в Обнинске | Адрес, телефон, часы работы',
+                'description' => 'Контактная информация агентства недвижимости Триумф.',
+                'keywords' => 'контакты агентства недвижимости, недвижимость Обнинск, купить квартиру Обнинск, продажа недвижимости Обнинск, аренда квартир Обнинск',
+                'canonical' => url('/contacts'),
+            ]
+        ]);
     }
 }

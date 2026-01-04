@@ -22,6 +22,12 @@ class SaleController extends Controller
             'propertyTypes' => NameListResource::collection($propertyTypes),
             'properties' => PropertyResource::collection($properties->items()),
             'pagination' => PaginationResource::make($properties),
+            'seo' => [
+                'title' => 'Продажа недвижимости | Купить квартиру, дом, коммерческую недвижимость | Агентство Триумф',
+                'description' => 'Продажа недвижимости от собственников и застройщиков. Купить квартиру, дом, коммерческую недвижимость по выгодным ценам. Проверенные объекты с фото и описанием.',
+                'keywords' => 'продажа недвижимости, купить квартиру, купить дом, вторичное жилье, новостройки, ипотека, коммерческая недвижимость',
+                'canonical' => url('/sales'),
+            ]
         ]);
     }
 }

@@ -22,6 +22,12 @@ class RentController extends Controller
             'propertyTypes' => NameListResource::collection($propertyTypes),
             'properties' => PropertyResource::collection($properties->items()),
             'pagination' => PaginationResource::make($properties),
+            'seo' => [
+                'title' => 'Аренда недвижимости | Снять квартиру, дом, офис | Агентство недвижимости Триумф',
+                'description' => 'Большой выбор объектов для аренды. Снять квартиру, дом, коммерческую недвижимость на выгодных условиях. Актуальные предложения с фото и ценами.',
+                'keywords' => 'аренда недвижимости, снять квартиру, аренда квартир, аренда домов, коммерческая аренда, долгосрочная аренда, посуточная аренда',
+                'canonical' => url('/rents'),
+            ]
         ]);
     }
 }

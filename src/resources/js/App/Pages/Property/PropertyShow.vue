@@ -15,8 +15,12 @@ import SubDataNovostroiki from '@/App/Pages/Property/Components/SubDataNovostroi
 import SubDataUchastki from '@/App/Pages/Property/Components/SubDataUchastki.vue';
 import SubDataDoma from '@/App/Pages/Property/Components/SubDataDoma.vue';
 
-const { property } = defineProps({
+const { property, seo } = defineProps({
   property: { type: Object, required: true },
+  seo: {
+    type: Object,
+    default: {}
+  }
 });
 
 const toggler = ref(false);
@@ -61,7 +65,7 @@ const showImage = (imageIndex) => {
 </script>
 
 <template>
-  <default-layout>
+  <default-layout :seo="seo">
     <div class="w-full flex flex-col gap-2">
       <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
         <div class="flex flex-col lg:px-0 px-4 gap-2 top-20 xl:sticky self-start max-h-screen overflow-y-auto">

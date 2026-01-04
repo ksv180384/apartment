@@ -11,6 +11,15 @@ const { propertyTypes, properties, pagination } = defineProps({
   propertyTypes: { type: Array, default: [] },
   properties: { type: Object, required: true },
   pagination: { type: Object, required: true },
+  seo: {
+    type: Object,
+    default: () => ({
+      title: 'Продажа недвижимости | Купить квартиру, дом, коммерческую недвижимость | Агентство Триумф',
+      description: 'Продажа недвижимости от собственников и застройщиков. Купить квартиру, дом, коммерческую недвижимость по выгодным ценам. Проверенные объекты с фото и описанием.',
+      keywords: 'продажа недвижимости, купить квартиру, купить дом, купить коммерческую недвижимость, вторичное жилье, новостройки, ипотека',
+      canonical: '/sales',
+    })
+  }
 });
 
 const {
@@ -34,7 +43,7 @@ watch(
 </script>
 
 <template>
-  <default-layout>
+  <default-layout :seo="seo">
     <template #headerRight>
       <AppFilter :property-types="propertyTypes"/>
     </template>

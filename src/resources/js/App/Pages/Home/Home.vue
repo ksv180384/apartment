@@ -1,15 +1,23 @@
 <script setup>
-
 import DefaultLayout from '@/App/Layouts/DefaultLayout.vue';
 import PropertyCard from '@/App/Pages/Property/Components/PropertyCard.vue';
 
-const {} = defineProps({
+const { lastProperties, seo } = defineProps({
   lastProperties: { type: Array, default: [] },
+  seo: {
+    type: Object,
+    default: () => ({
+      title: 'Агентство недвижимости "Триумф" - Купить, продать, арендовать жилье',
+      description: 'Надежное агентство недвижимости "Триумф". Помогаем купить, продать или арендовать квартиру, дом, коммерческую недвижимость. Юридическая чистота сделок, сопровождение "под ключ".',
+      keywords: 'недвижимость, купить квартиру, продать квартиру, аренда жилья, агентство недвижимости, Триумф',
+      canonical: window.location.origin,
+    })
+  }
 });
 </script>
 
 <template>
-  <default-layout>
+  <default-layout :seo="seo">
     <div>
       <section class="relative bg-gradient-to-r from-gray-900 to-gray-800 text-white rounded-xl overflow-hidden">
         <div class="absolute inset-0 z-0">
@@ -89,17 +97,17 @@ const {} = defineProps({
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 
-
             <template v-for="lastProperty in lastProperties">
               <property-card
                 :property="lastProperty"
               />
             </template>
-          </div>
 
+          </div>
 
         </div>
       </section>
+
     </div>
   </default-layout>
 </template>

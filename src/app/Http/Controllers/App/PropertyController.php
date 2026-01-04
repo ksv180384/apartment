@@ -27,6 +27,12 @@ class PropertyController extends Controller
 
         return Inertia::render('Property/PropertyShow', [
             'property' => PropertyShowResource::make($property),
+            'seo' => [
+                'title' => $property->title,
+                'description' => $property->title,
+                'keywords' => $property->title,
+                'canonical' => url('/properties' . $id),
+            ]
         ]);
     }
 }

@@ -4,6 +4,19 @@ import { ref, computed } from 'vue';
 import DefaultLayout from '@/App/Layouts/DefaultLayout.vue';
 import YaMapPoint from '@/App/Components/YaMapPoint.vue';
 
+const { seo } = defineProps({
+  lastProperties: { type: Array, default: [] },
+  seo: {
+    type: Object,
+    default: () => ({
+      title: 'Контакты агентства недвижимости Триумф в Обнинске | Адрес, телефон, часы работы',
+      description: `Контактная информация агентства недвижимости Триумф.`,
+      keywords: `контакты агентства недвижимости, недвижимость Обнинск, купить квартиру Обнинск, продажа недвижимости Обнинск, аренда квартир Обнинск`,
+      canonical: window.location.origin,
+    })
+  }
+});
+
 const coordinates = ref([36.598892, 55.118967]);
 const isPhoneVisible = ref(false);
 const phone = computed(() => {
@@ -12,7 +25,7 @@ const phone = computed(() => {
 </script>
 
 <template>
-  <default-layout>
+  <default-layout :seo="seo">
 
     <div class="flex flex-col">
       <h1 class="text-center pt-2 lg:pb-12 pb-6 lg:text-4xl text-2xl font-semibold">
