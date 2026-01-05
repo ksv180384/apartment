@@ -53,9 +53,34 @@ export function usePropertyMap(initialProperties) {
     hoverMarker.value = 0;
   };
 
+  // Добавляем функцию для прокрутки к карточке
+  const scrollToProperty = (id) => {
+    const element = document.getElementById(`property-${id}`);
+    if (element) {
+      // Плавная прокрутка к элементу
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'nearest'
+      });
+
+      // Добавляем подсветку (опционально)
+      element.classList.add('highlight');
+      setTimeout(() => {
+        element.classList.remove('highlight');
+      }, 2000);
+    }
+  };
+
   const markerClick = (id) => {
-    // логика клика по маркеру
-    console.log('Marker clicked:', id);
+    // Прокручиваем к карточке при клике на маркер
+    scrollToProperty(id);
+
+    // Также можно добавить дополнительную логику выделения
+    // markers.value = markers.value.map(item => ({
+    //   ...item,
+    //   active: item.id === id
+    // }));
   };
 
   watch(

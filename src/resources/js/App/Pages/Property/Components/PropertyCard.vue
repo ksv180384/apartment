@@ -18,6 +18,7 @@ const onMouseLeaveCard = () => {
 
 <template>
   <div
+    :id="`property-${property.id}`"
     class="rounded-2xl overflow-hidden bg-violet-50 transition-all duration-300"
     :class="[
               hoverMarker === property.id ? 'shadow-[0_0_0_4px] shadow-violet-300' : ''
@@ -28,7 +29,7 @@ const onMouseLeaveCard = () => {
     <div class="relative">
       <img :src="property.image_main" :alt="property.title" class="w-full h-48 object-cover">
       <div class="absolute top-2 left-2 text-violet-700 bg-violet-100 px-2 py-1 rounded-full text-xs font-medium">
-        {{ property.category }}
+        #{{ property.id }}
       </div>
     </div>
     <div class="p-4">
