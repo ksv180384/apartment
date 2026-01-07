@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\App\SitemapController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,8 @@ use Inertia\Inertia;
 //})->name('home');
 
 Route::get('/', [\App\Http\Controllers\App\HomeController::class, 'index'])->name('home');
+
+Route::get('/sitemap.xml', [SitemapController::class, 'index']);
 
 
 Route::get('/redirect', function (\Illuminate\Http\Request $request) {
