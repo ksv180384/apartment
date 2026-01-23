@@ -41,6 +41,20 @@ Route::get('rents', [\App\Http\Controllers\App\RentController::class, 'index'])-
 Route::get('sales', [\App\Http\Controllers\App\SaleController::class, 'index'])->name('sales.index');
 Route::get('contacts', [\App\Http\Controllers\App\ContactsController::class, 'index'])->name('contacts.index');
 
+// Маршруты для управления кэшем (только для админов)
+Route::prefix('cache')->group(function () {
+    Route::get('/', [\App\Http\Controllers\App\CacheController::class, 'index'])->name('admin.cache');
+    Route::get('/clear-all', [\App\Http\Controllers\App\CacheController::class, 'clearAll'])->name('admin.cache.clearAll');
+    Route::get('/clear-config', [\App\Http\Controllers\App\CacheController::class, 'clearConfig'])->name('admin.cache.clearConfig');
+    Route::get('/clear-cache', [\App\Http\Controllers\App\CacheController::class, 'clearCache'])->name('admin.cache.clearCache');
+    Route::get('/clear-view', [\App\Http\Controllers\App\CacheController::class, 'clearView'])->name('admin.cache.clearView');
+    Route::get('/clear-route', [\App\Http\Controllers\App\CacheController::class, 'clearRoute'])->name('admin.cache.clearRoute');
+    Route::get('/storage-link', [\App\Http\Controllers\App\CacheController::class, 'createStorageLink'])->name('admin.cache.storageLink');
+    Route::get('/optimize', [\App\Http\Controllers\App\CacheController::class, 'optimize'])->name('admin.cache.optimize');
+    Route::get('/composer-dump', [\App\Http\Controllers\App\CacheController::class, 'composerDump'])->name('admin.cache.composerDump');
+});
+
+
 Route::middleware(['auth', 'verified'])->group(function () {
 
     // Home
