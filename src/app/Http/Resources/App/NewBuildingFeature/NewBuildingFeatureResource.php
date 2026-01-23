@@ -17,7 +17,7 @@ class NewBuildingFeatureResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'completion_date' => $this->completion_date->format('d.m.Y'),
+            'completion_date' => $this->completion_date?->format('d.m.Y'),
             'building_name' => $this->building_name,
             'developer' => $this->developer,
             'building_class' => NameListResource::make($this->buildingClass),
