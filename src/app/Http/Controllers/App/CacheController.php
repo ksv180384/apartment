@@ -84,7 +84,7 @@ class CacheController extends Controller
 
     public function createStorageLink()
     {
-        try {
+//        try {
             // Удаляем существующий симлинк если есть
             if (file_exists(public_path('storage'))) {
                 unlink(public_path('storage'));
@@ -94,10 +94,12 @@ class CacheController extends Controller
             Artisan::call('storage:link');
             $output = Artisan::output();
 
+            dd($output);
+
             return back()->with('success', 'Симлинк storage создан! ' . $output);
-        } catch (\Exception $e) {
-            return back()->with('error', 'Ошибка: ' . $e->getMessage());
-        }
+//        } catch (\Exception $e) {
+//            return back()->with('error', 'Ошибка: ' . $e->getMessage());
+//        }
     }
 
     public function optimize()
