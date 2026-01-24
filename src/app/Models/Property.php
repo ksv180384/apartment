@@ -145,6 +145,11 @@ class Property extends Model
         return $this->hasMany(Media::class)->orderBy('order');
     }
 
+    public function getDir()
+    {
+        return 'property/' . $this->id;
+    }
+
     public function getImagesDir()
     {
         return 'property/' . $this->id . '/images/';

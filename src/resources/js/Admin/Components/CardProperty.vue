@@ -1,9 +1,15 @@
 <script setup>
-import {Link} from "@inertiajs/vue3";
+import { Link } from '@inertiajs/vue3';
+import { More } from '@element-plus/icons-vue';
 
 const { property } = defineProps({
-  property: { type: Object, required: true }
+  property: {type: Object, required: true},
 });
+const emits = defineEmits(['remove']);
+
+const deleteItem = (id) => {
+  emits('remove', id)
+}
 
 </script>
 
@@ -12,9 +18,32 @@ const { property } = defineProps({
     <div class="relative">
       <img :src="property.image_main" :alt="property.title" class="w-full h-48 object-cover">
       <div class="absolute top-2 left-2 bg-white px-2 py-1 rounded-full text-xs font-medium">{{ property.category }}</div>
-      <button class="absolute text-xs top-2 right-2 p-2 bg-white rounded-full">
-        #{{ property.id }}
-      </button>
+      <div class="absolute text-xs top-2 right-2 flex gap-3">
+        <button class=" p-2 bg-white rounded-full">
+          #{{ property.id }}
+        </button>
+        <el-dropdown placement="bottom" trigger="click" :hide-on-click="false">
+          <el-button :icon="More" circle/>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item>
+                <el-popconfirm
+                  confirm-button-text="Да"
+                  cancel-button-text="Нет"
+                  confirm-button-type="danger"
+                  hide-icon
+                  title="Удалить?"
+                  @confirm="deleteItem(property.id)"
+                >
+                  <template #reference>
+                    Удалить
+                  </template>
+                </el-popconfirm>
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+      </div>
     </div>
     <div class="p-4">
       <h3 class="font-semibold mb-1">

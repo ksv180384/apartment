@@ -23,4 +23,9 @@ class HouseFeatureStrategy implements FeatureStrategyInterface
             $this->create($property, $subData);
         }
     }
+
+    public function delete(int $id): void
+    {
+        (new HouseFeatureService())->destroy($id);
+    }
 }

@@ -23,4 +23,9 @@ class GarageFeatureStrategy implements FeatureStrategyInterface
             $this->create($property, $subData);
         }
     }
+
+    public function delete(int $id): void
+    {
+        (new GarageFeatureService())->destroy($id);
+    }
 }

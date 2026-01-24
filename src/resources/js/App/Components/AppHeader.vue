@@ -80,6 +80,17 @@ const togglePhoneVisibility = () => {
             class="absolute bottom-0 left-0 w-full h-0.5 bg-violet-600 rounded-full"
           ></span>
         </Link>
+        <a
+          v-if="$page.props.auth.user"
+          :href="route('admin.home')"
+          class="hover:text-violet-600 relative pb-1 h-full flex items-center"
+        >
+          Админка
+          <span
+            v-if="isActive('admin.home')"
+            class="absolute bottom-0 left-0 w-full h-0.5 bg-violet-600 rounded-full"
+          ></span>
+        </a>
       </nav>
 
       <div class="flex-1 flex items-center lg:justify-end justify-center">

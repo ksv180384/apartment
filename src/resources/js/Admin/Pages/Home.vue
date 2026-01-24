@@ -8,7 +8,7 @@ import AdminLayout from "@/Admin/Layouts/AdminLayout.vue";
   <Head title="Dashboard" />
 
   <AdminLayout>
-    ddd
+
   </AdminLayout>
 </template>
 

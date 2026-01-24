@@ -32,4 +32,13 @@ class CommercialFeatureService
 
         return $commercialFeature;
     }
+
+    public function destroy(int $id)
+    {
+        $feature = CommercialFeature::where('property_id', $id)->first();
+
+        if ($feature) {
+            $feature->delete();
+        }
+    }
 }

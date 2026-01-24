@@ -89,4 +89,13 @@ class HouseFeatureService
 
         return $houseFeature;
     }
+
+    public function destroy(int $id)
+    {
+        $feature = HouseFeature::where('property_id', $id)->first();
+
+        if ($feature) {
+            $feature->delete();
+        }
+    }
 }

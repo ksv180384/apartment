@@ -190,7 +190,35 @@ class PropertyService
     {
         $property = Property::query()->findOrFail($id);
 
+        // Удаляем связанные изображения
+        $this->deletePropertyImages($property);
+
+        // Удаляем дополнительную feature data через стратегию
+        $this->deleteFeatureData($property);
+
+        // Удаляем связанные адреса
+        if ($property->address) {
+            $property->address->delete();
+        }
+
+        // Удаляем связанные features
+        if ($property->features) {
+            $property->features->delete();
+        }
+
         $property->delete();
+    }
+
+    public static function subDataResource(string $propertyTypeSlug, $subData)
+    {
+        return match($propertyTypeSlug) {
+            'novostroiki', 'kvartiry', 'komnaty' => NewBuildingFeatureResource::make($subData),
+            'doma' => HouseFeatureResource::make($subData),
+            'uchastki' => LandFeatureResource::make($subData),
+            'kommerceskaia-nedvizimost' => CommercialFeatureResource::make($subData),
+            'garazi' => GarageFeatureResource::make($subData),
+            default => null,
+        };
     }
 
     /**
@@ -282,15 +310,43 @@ class PropertyService
         Media::insert($imagesToInsert);
     }
 
-    public static function subDataResource(string $propertyTypeSlug, $subData)
+    /**
+     * Удаление изображений свойства
+     */
+    private function deletePropertyImages(Property $property): void
     {
-        return match($propertyTypeSlug) {
-            'novostroiki', 'kvartiry', 'komnaty' => NewBuildingFeatureResource::make($subData),
-            'doma' => HouseFeatureResource::make($subData),
-            'uchastki' => LandFeatureResource::make($subData),
-            'kommerceskaia-nedvizimost' => CommercialFeatureResource::make($subData),
-            'garazi' => GarageFeatureResource::make($subData),
-            default => null,
-        };
+        if ($property->media->isNotEmpty()) {
+            $imageUploadService = new ImageUploadService();
+
+            // Удаляем файл с диска
+            $imageUploadService->deleteDirectory($property->getDir());
+
+            foreach ($property->media as $media) {
+                // Удаляем запись из БД
+                $media->delete();
+            }
+        }
+    }
+
+    /**
+     * Удаление дополнительных данных через стратегию
+     */
+    private function deleteFeatureData(Property $property): void
+    {
+        $propertyTypeSlug = $property->property_type_slug;
+
+        if (!$propertyTypeSlug) {
+            return;
+        }
+
+        // Получаем стратегию через фабрику
+        $strategy = FeatureStrategyFactory::make($propertyTypeSlug);
+
+        if (!$strategy) {
+            return;
+        }
+
+        // Вызываем метод delete у стратегии
+        $strategy->delete($property->id);
     }
 }

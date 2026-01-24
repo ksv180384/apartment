@@ -109,3 +109,9 @@ watch(
 
   </yandex-map>
 </template>
+
+<style scoped>
+:deep(.ymaps3--search-control__input){
+  background-color: white;
+}
+</style>

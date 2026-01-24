@@ -43,7 +43,10 @@ const deleteItem = (id) => {
     <div class="flex flex-row flex-wrap justify-center px-4 gap-4">
       <template v-for="property in properties" :key="property.id">
 
-        <CardProperty :property="property" />
+        <CardProperty
+          :property="property"
+          @remove="deleteItem"
+        />
 
       </template>
     </div>

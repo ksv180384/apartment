@@ -36,4 +36,13 @@ class NewBuildingFeatureService
 
         return $newBuildingFeature;
     }
+
+    public function destroy(int $id)
+    {
+        $feature = NewBuildingFeature::where('property_id', $id)->first();
+
+        if ($feature) {
+            $feature->delete();
+        }
+    }
 }

@@ -51,7 +51,7 @@ class ImageUploadService
 
     public function deleteDirectory(string $directory): void
     {
-        Storage::delete($directory);
+        Storage::deleteDirectory($directory);
     }
 
     /**

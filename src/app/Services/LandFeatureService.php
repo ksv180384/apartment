@@ -32,4 +32,13 @@ class LandFeatureService
 
         return $landFeature;
     }
+
+    public function destroy(int $id)
+    {
+        $feature = LandFeature::where('property_id', $id)->first();
+
+        if ($feature) {
+            $feature->delete();
+        }
+    }
 }

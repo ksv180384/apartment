@@ -42,4 +42,13 @@ class GarageFeatureService
 
         return $garageFeature;
     }
+
+    public function destroy(int $id)
+    {
+        $feature = GarageFeature::where('property_id', $id)->first();
+
+        if ($feature) {
+            $feature->delete();
+        }
+    }
 }

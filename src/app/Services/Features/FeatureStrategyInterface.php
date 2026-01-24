@@ -9,4 +9,5 @@ interface FeatureStrategyInterface
 
     public function create(Property $property, array $subData): void;
     public function update(Property $property, array $subData): void;
+    public function delete(int $id): void;
 }

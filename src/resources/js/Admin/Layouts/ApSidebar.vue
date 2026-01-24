@@ -21,7 +21,7 @@ const props = defineProps({
   >
     <div class="py-5 flex justify-center">
       <a href="/" class="uppercase font-bold">
-        Логотип
+        ТРИУМФ
       </a>
     </div>
     <div
