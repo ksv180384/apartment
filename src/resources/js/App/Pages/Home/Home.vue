@@ -19,7 +19,7 @@ const { lastProperties, seo } = defineProps({
 <template>
   <default-layout :seo="seo">
     <div>
-      <section class="relative bg-gradient-to-r from-gray-900 to-gray-800 text-white rounded-xl overflow-hidden">
+      <section class="relative mx-4 lg:mx-0 bg-gradient-to-r from-gray-900 to-gray-800 text-white rounded-xl overflow-hidden">
         <div class="absolute inset-0 z-0">
           <div class="absolute inset-0 bg-black opacity-50"></div>
           <img src="/images/nizkii-ugol-vysotnyh-raznyh-zdanii_2.jpg"
@@ -29,7 +29,7 @@ const { lastProperties, seo } = defineProps({
         <div class="container mx-auto lg:px-10 px-4 py-24 relative z-[1]">
           <div class="max-w-2xl">
             <span class="inline-block bg-violet-600 text-white px-4 py-1 rounded-full text-sm font-medium mb-4">Ваш триумф в мире недвижимости</span>
-            <h1 class="hero-title text-4xl md:text-5xl lg:text-6xl font-bold mb-6">Найдем дом вашей мечты</h1>
+            <h1 class="hero-title text-4xl md:text-5xl lg:text-6xl font-bold mb-6">Найдем дом<br/> вашей мечты</h1>
             <p class="text-xl mb-8 text-gray-200">
               Агентство недвижимости «Триумф»<br/>
               Ваш надежный проводник в мире покупки, продажи и аренды жилья. Помогаем людям обрести свой дом.</p>
