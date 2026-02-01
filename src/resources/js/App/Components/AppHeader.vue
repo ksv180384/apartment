@@ -63,7 +63,7 @@ const togglePhoneVisibility = () => {
           class="hover:text-violet-600 relative pb-1 h-full flex items-center"
           :class="{ 'text-violet-600': isActive('sales.index') }"
         >
-          Покупка
+          Продажа
           <span
             v-if="isActive('sales.index')"
             class="absolute bottom-0 left-0 w-full h-0.5 bg-violet-600 rounded-full"
