@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, nextTick, reactive, watch, computed } from 'vue';
 import { useForm } from '@inertiajs/vue3';
+import { useFormattedNumber, parseFormattedNumber } from '@/App/Composables/useFormattedNumber.js';
 
 import YaMap from '@/Admin/Pages/Property/Components/Form/YaMap.vue';
 import SubFormNovostroiki from '@/Admin/Pages/Property/Components/Form/SubFormNovostroiki.vue';
@@ -79,10 +80,11 @@ const inertiaForm = useForm({
   longitude: null,
   sub_data: null,
 });
+
 const form = reactive({
   title: props.property?.title || '',
   description: props.property?.description || '',
-  price: props.property?.price || '',
+  price: parseFormattedNumber(props.property?.price ?? '') || '',
   category_id : props.property?.category_id || '',
   property_type_id : props.property?.property_type_id || '',
   property_type_slug : null,
@@ -100,6 +102,11 @@ const form = reactive({
   images: props.property?.images || [],
   sub_data: props.property?.sub_data  || null,
 });
+
+const priceDisplay = useFormattedNumber(
+  { get: () => form.price, set: (v) => (form.price = v) },
+  { thousandsSeparator: ' ', maxDecimalPlaces: 2 }
+);
 
 const rules = {
   title: [
@@ -279,7 +286,7 @@ onMounted(() => {
       </div>
       <div class="flex-1">
         <el-form-item label="Цена" label-position="top" prop="price" required :error="errors?.price || null">
-          <el-input v-model="form.price" placeholder="Цена" clearable/>
+          <el-input v-model="priceDisplay" placeholder="Цена" clearable maxlength="18"/>
         </el-form-item>
       </div>
     </div>

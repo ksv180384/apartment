@@ -49,7 +49,9 @@ const rules = {};
 
 // Обновление родительского компонента
 const updateParent = () => {
-  emits('update', { ...domaForm });
+  const payload = { ...domaForm };
+  if (payload.finishing_type_id === '' || payload.finishing_type_id == null) payload.finishing_type_id = null;
+  emits('update', payload);
 }
 
 const checkForm = async () => {

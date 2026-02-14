@@ -19,15 +19,15 @@ const onMouseLeaveCard = () => {
 <template>
   <div
     :id="`property-${property.id}`"
-    class="rounded-2xl overflow-hidden bg-violet-50 transition-all duration-300"
+    class="property-card rounded-2xl overflow-hidden bg-violet-50 transition-all duration-300 ease-out"
     :class="[
               hoverMarker === property.id ? 'shadow-[0_0_0_4px] shadow-violet-300' : ''
             ]"
     @mouseenter="onMouseEnterCard(property.id)"
     @mouseleave="onMouseLeaveCard()"
   >
-    <div class="relative">
-      <img :src="property.image_main" :alt="property.title" class="w-full h-48 object-cover">
+    <div class="relative overflow-hidden">
+      <img :src="property.image_main" :alt="property.title" class="property-card-img w-full h-48 object-cover transition-transform duration-500 ease-out">
       <div class="absolute top-2 left-2 text-violet-700 bg-violet-100 px-2 py-1 rounded-full text-xs font-medium">
         #{{ property.id }}
       </div>
@@ -50,5 +50,11 @@ const onMouseLeaveCard = () => {
 </template>
 
 <style scoped>
-
+.property-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -12px rgba(124, 58, 237, 0.2);
+}
+.property-card:hover .property-card-img {
+  transform: scale(1.05);
+}
 </style>

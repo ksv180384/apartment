@@ -10,20 +10,21 @@ class NewBuildingFeatureService
 
     public function create(array $newBuildingFeatureData): NewBuildingFeature
     {
+        $data = $this->normalizeNullableIds($newBuildingFeatureData);
         $newBuildingFeature = NewBuildingFeature::query()->create([
-            'property_id' => $newBuildingFeatureData['property_id'] ?? null,
-            'completion_date' => $newBuildingFeatureData['completion_date'] ?? null,
-            'building_name' => $newBuildingFeatureData['building_name'] ?? null,
-            'developer' => $newBuildingFeatureData['developer'] ?? null,
-            'building_class_id' => $newBuildingFeatureData['building_class_id'] ?? null,
-            'building_type_id' => $newBuildingFeatureData['building_type_id'] ?? null,
-            'building_floors' => $newBuildingFeatureData['building_floors'] ?? null,
-            'apartments_total' => $newBuildingFeatureData['apartments_total'] ?? null,
-            'finishing_type_id' => $newBuildingFeatureData['finishing_type_id'] ?? null,
-            'has_installment' => $newBuildingFeatureData['has_installment'] ?? null,
-            'has_mortgage' => $newBuildingFeatureData['has_mortgage'] ?? null,
-            'has_balcony' => $newBuildingFeatureData['has_balcony'] ?? null,
-            'has_loggia' => $newBuildingFeatureData['has_loggia'] ?? null,
+            'property_id' => $data['property_id'] ?? null,
+            'completion_date' => $data['completion_date'] ?? null,
+            'building_name' => $data['building_name'] ?? null,
+            'developer' => $data['developer'] ?? null,
+            'building_class_id' => $data['building_class_id'] ?? null,
+            'building_type_id' => $data['building_type_id'] ?? null,
+            'building_floors' => $data['building_floors'] ?? null,
+            'apartments_total' => $data['apartments_total'] ?? null,
+            'finishing_type_id' => $data['finishing_type_id'] ?? null,
+            'has_installment' => $data['has_installment'] ?? null,
+            'has_mortgage' => $data['has_mortgage'] ?? null,
+            'has_balcony' => $data['has_balcony'] ?? null,
+            'has_loggia' => $data['has_loggia'] ?? null,
         ]);
 
         return $newBuildingFeature;
@@ -32,9 +33,24 @@ class NewBuildingFeatureService
     public function update(int $id, array $newBuildingFeatureData): NewBuildingFeature
     {
         $newBuildingFeature = NewBuildingFeature::query()->findOrFail($id);
-        $newBuildingFeature->update($newBuildingFeatureData);
+        $data = $this->normalizeNullableIds($newBuildingFeatureData);
+        $newBuildingFeature->update($data);
 
         return $newBuildingFeature;
+    }
+
+    /**
+     * Пустая строка из clearable-полей приходит как '' — для nullable id в БД нужен null.
+     */
+    private function normalizeNullableIds(array $data): array
+    {
+        $nullableIds = ['building_class_id', 'building_type_id', 'finishing_type_id'];
+        foreach ($nullableIds as $key) {
+            if (array_key_exists($key, $data) && ($data[$key] === '' || $data[$key] === null)) {
+                $data[$key] = null;
+            }
+        }
+        return $data;
     }
 
     public function destroy(int $id)

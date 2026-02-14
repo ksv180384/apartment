@@ -15,7 +15,8 @@ class HouseFeatureService
             'land_area' => $houseFeatureData['land_area'] ?? null,
             'bedrooms_total' => $houseFeatureData['bedrooms_total'] ?? null,
             'building_floors' => $houseFeatureData['building_floors'] ?? null,
-            'finishing_type_id' => $houseFeatureData['finishing_type_id'] ?? null,
+            'finishing_type_id' => (isset($houseFeatureData['finishing_type_id']) && $houseFeatureData['finishing_type_id'] !== '' && $houseFeatureData['finishing_type_id'] !== null)
+                ? $houseFeatureData['finishing_type_id'] : null,
             'area_living' => $houseFeatureData['area_living'] ?? null,
             'bathrooms_total' => $houseFeatureData['bathrooms_total'] ?? null,
             'ceiling_height' => $houseFeatureData['ceiling_height'] ?? null,
@@ -56,7 +57,8 @@ class HouseFeatureService
             'land_area' => $houseFeatureData['land_area'] ?? null,
             'bedrooms_total' => $houseFeatureData['bedrooms_total'] ?? null,
             'building_floors' => $houseFeatureData['building_floors'] ?? null,
-            'finishing_type_id' => $houseFeatureData['finishing_type_id'] ?? null,
+            'finishing_type_id' => (isset($houseFeatureData['finishing_type_id']) && $houseFeatureData['finishing_type_id'] !== '' && $houseFeatureData['finishing_type_id'] !== null)
+                ? $houseFeatureData['finishing_type_id'] : null,
             'area_living' => $houseFeatureData['area_living'] ?? null,
             'bathrooms_total' => $houseFeatureData['bathrooms_total'] ?? null,
             'ceiling_height' => $houseFeatureData['ceiling_height'] ?? null,

@@ -33,19 +33,25 @@ const novostroikiForm = reactive({
 });
 
 const rules = {
-  building_class_id: [
-    { required: true, message: 'Введите Telegram', trigger: 'blur' }
-  ],
-  building_type_id: [
-    { required: true, message: 'Введите Telegram', trigger: 'blur' }
-  ],
-  finishing_type_id: [
-    { required: true, message: 'Введите Telegram', trigger: 'blur' }
-  ],
+  // building_class_id: [
+  //   { required: true, message: 'Поле обязательно для заполнения', trigger: 'blur' }
+  // ],
+  // building_type_id: [
+  //   { required: true, message: 'Поле обязательно для заполнения', trigger: 'blur' }
+  // ],
+  // finishing_type_id: [
+  //   { required: true, message: 'Поле обязательно для заполнения', trigger: 'blur' }
+  // ],
 };
-// Обновление родительского компонента
+const NULLABLE_ID_KEYS = ['building_class_id', 'building_type_id', 'finishing_type_id'];
+
+// Обновление родительского компонента (пустые строки от clearable → null для сохранения в БД)
 const updateParent = () => {
-  emits('update', { ...novostroikiForm });
+  const payload = { ...novostroikiForm };
+  NULLABLE_ID_KEYS.forEach((key) => {
+    if (payload[key] === '' || payload[key] == null) payload[key] = null;
+  });
+  emits('update', payload);
 }
 
 const checkForm = async () => {
@@ -167,7 +173,7 @@ onMounted(() => {
 
       <div class="flex md:flex-row flex-col gap-4">
         <div class="flex-1">
-          <el-form-item label="Класс жилья" label-position="top" prop="building_class_id" required :error="errors?.building_class_id || null">
+          <el-form-item label="Класс жилья" label-position="top" prop="building_class_id" :error="errors?.building_class_id || null">
             <el-select
               v-model="novostroikiForm.building_class_id"
               placeholder="Класс жилья"
@@ -183,7 +189,7 @@ onMounted(() => {
           </el-form-item>
         </div>
         <div class="flex-1">
-          <el-form-item label="Тип дома" label-position="top" prop="building_type_id" required :error="errors?.building_type_id || null">
+          <el-form-item label="Тип дома" label-position="top" prop="building_type_id" :error="errors?.building_type_id || null">
             <el-select
               v-model="novostroikiForm.building_type_id"
               placeholder="Тип дома"
@@ -199,7 +205,7 @@ onMounted(() => {
           </el-form-item>
         </div>
         <div class="flex-1">
-          <el-form-item label="Тип отделки" label-position="top" prop="finishing_type_id" required :error="errors?.finishing_type_id || null">
+          <el-form-item label="Тип отделки" label-position="top" prop="finishing_type_id" :error="errors?.finishing_type_id || null">
             <el-select
               v-model="novostroikiForm.finishing_type_id"
               placeholder="Тип отделки"
